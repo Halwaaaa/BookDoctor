@@ -1,11 +1,11 @@
 import 'dart:io';
 
-class AskToSingEntity {
+class EntityAskToSing {
   String? name;
   String? phone;
   File? Cv;
   String? part;
-  AskToSingEntity({
+  EntityAskToSing({
     required this.Cv,
     required this.name,
     required this.part,

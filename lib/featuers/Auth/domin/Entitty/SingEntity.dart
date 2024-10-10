@@ -1,4 +1,4 @@
-class SingEntity {
+class EntitySing {
   String? Email;
   String? passWord;
 }

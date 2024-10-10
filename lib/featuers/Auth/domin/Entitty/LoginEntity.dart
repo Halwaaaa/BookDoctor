@@ -1,4 +1,4 @@
-class LoginEntity {
+class EntityLogin {
   String? email;
   String? password;
 }
