@@ -1,3 +1,4 @@
+import 'package:bookdoctor/core/Excption/Excption.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,12 +28,3 @@ class internetConection {
   }
 }
 
-class internetConectionEx implements Exception {
-  final String message;
-  internetConectionEx(this.message);
-
-  @override
-  String toString() {
-    return message;
-  }
-}

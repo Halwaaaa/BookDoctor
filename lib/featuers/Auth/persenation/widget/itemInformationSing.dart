@@ -1,14 +1,19 @@
 import 'package:bookdoctor/core/componted/DafultTextFormFiled.dart';
 import 'package:bookdoctor/core/constant/config.dart';
+import 'package:bookdoctor/featuers/Auth/persenation/controol/singControl.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class itemInformation extends StatelessWidget {
-  const itemInformation({
+  itemInformation({
     super.key,
     required this.config,
+    required,
   });
 
   final Config config;
+  ContrrolSing contrrolSing = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +29,7 @@ class itemInformation extends StatelessWidget {
         // ),
         Flexible(
           child: DafulteTextForm(
-            //controller: cubit.NameControol,
+            controller: contrrolSing.emailControol,
             title: "الاسم ",
             validator: config.validator,
           ),
@@ -51,7 +56,7 @@ class itemInformation extends StatelessWidget {
         ),
         Flexible(
           child: DafulteTextForm(
-            //controller: cubit.PasswordControol,
+            controller: contrrolSing.passWordControol,
             title: "كلمة السر ",
             validator: config.validator,
           ),

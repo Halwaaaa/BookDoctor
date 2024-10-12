@@ -1,12 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-abstract class faluires {}
+abstract class faluires {
+  final String masseges;
+
+  faluires({required this.masseges});
+}
 
 class faluiresfiebasesing extends faluires {
-  faluiresfiebasesing({required this.masseges});
+  faluiresfiebasesing({required super.masseges});
 
-  final String masseges;
   factory faluiresfiebasesing.fromFierbaseAuthEroor(
       FirebaseAuthException authException) {
     if (authException.message?.contains('403') == true) {
@@ -18,13 +21,13 @@ class faluiresfiebasesing extends faluires {
 }
 
 class unknowfaluires extends faluires {
-  final String masseges;
-  unknowfaluires({
-    required this.masseges,
-  });
+  unknowfaluires({required super.masseges});
 }
 
 class faluiresInternet extends faluires {
-  final String masseges;
-  faluiresInternet({required this.masseges});
+  faluiresInternet({required super.masseges});
+}
+
+class faluiresHaveAccount extends faluires {
+  faluiresHaveAccount({required super.masseges});
 }

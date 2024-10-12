@@ -1,17 +1,20 @@
 import 'package:bookdoctor/core/componted/DafultBoutton.dart';
 import 'package:bookdoctor/core/componted/DafultTextFormFiled.dart';
 import 'package:bookdoctor/core/constant/config.dart';
+import 'package:bookdoctor/featuers/Auth/persenation/controol/singControl.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/AppBarSing.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/HelloText.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/customInformationSing.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SingView extends StatelessWidget {
   const SingView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ContrrolSing contrrolSing = Get.find();
     Config config = Config();
 
     //  print()
@@ -41,6 +44,7 @@ class SingView extends StatelessWidget {
               isLoding: false,
               titil: "سجل",
               ontap: () {
+                contrrolSing.CreateAccout();
                 // cubit.TapSin(context);
               },
             ),
