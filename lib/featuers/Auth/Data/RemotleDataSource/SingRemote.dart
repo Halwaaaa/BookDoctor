@@ -5,7 +5,7 @@ import 'package:bookdoctor/featuers/Auth/domin/Entitty/checkIfEmailEntity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 abstract class SingRemoteDataSousrce {
-  Future<bool> SendFeaTuredAskToSing(EntityAskToSing askToSingEntity);
+  Future<UserCredential> SendFeaTuredAskToSing(EntityAskToSing askToSingEntity);
 
   Future<bool> checkIfEmailRegisteredWithGoogle(
       EntitycheckIfEmailRegistered emailRegistered);
@@ -13,11 +13,10 @@ abstract class SingRemoteDataSousrce {
 
 class SingRemoteDataSousrceImp extends SingRemoteDataSousrce {
   @override
-  Future<bool> SendFeaTuredAskToSing(EntityAskToSing askToSingEntity) async {
-    return true;
-    //  await FirebaseAuth.instance
-    // .createUserWithEmailAndPassword(
-    //     email: askToSingEntity.email!, password: );
+  Future<UserCredential> SendFeaTuredAskToSing(
+      EntityAskToSing askToSingEntity) async {
+    return await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: askToSingEntity.email!, password: askToSingEntity.password!);
   }
 
   @override

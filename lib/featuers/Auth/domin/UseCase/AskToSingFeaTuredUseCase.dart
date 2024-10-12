@@ -6,8 +6,10 @@ import 'package:bookdoctor/featuers/Auth/domin/Repos/SingRepo.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class AskToSingFeaTuredUseCase extends UseCase<UserCredential, EntityAskToSing> {
+class AskToSingFeaTuredUseCase
+    extends UseCase<UserCredential, EntityAskToSing> {
   final SingRepo singRepo;
+
   AskToSingFeaTuredUseCase({
     required this.singRepo,
   });
