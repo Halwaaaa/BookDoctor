@@ -1,4 +1,4 @@
-class EntitySing {
+class EntitycheckIfEmailRegistered {
   String? Email;
   String? passWord;
 }
