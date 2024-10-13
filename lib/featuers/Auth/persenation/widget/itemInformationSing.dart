@@ -5,20 +5,34 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-class itemInformation extends StatelessWidget {
-  itemInformation({
+class itemInformation extends StatefulWidget {
+  const itemInformation({
     super.key,
     required this.config,
     required,
   });
 
   final Config config;
-  ContrrolSing contrrolSing = Get.find();
+
+  @override
+  State<itemInformation> createState() => _itemInformationState();
+}
+
+class _itemInformationState extends State<itemInformation>
+    with SingleTickerProviderStateMixin {
+  SingContrrol contrrolSing = Get.find();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    AnimatedInit();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // DafulteTextForm(
         //     //controller: cubit.EmailControol,
@@ -31,7 +45,7 @@ class itemInformation extends StatelessWidget {
           child: DafulteTextForm(
             controller: contrrolSing.emailControol,
             title: "الاسم ",
-            validator: config.validator,
+            validator: widget.config.validator,
           ),
         ),
         const SizedBox(
@@ -58,15 +72,15 @@ class itemInformation extends StatelessWidget {
           child: DafulteTextForm(
             controller: contrrolSing.passWordControol,
             title: "كلمة السر ",
-            validator: config.validator,
+            validator: widget.config.validator,
           ),
         ),
         const SizedBox(
           height: 20,
         ),
-
-        IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_left))
       ],
     );
   }
+
+  void AnimatedInit() {}
 }

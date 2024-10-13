@@ -37,7 +37,7 @@ class SingReposImplo extends SingRepo {
             .checkIfEmailRegisteredWithGoogle(emailRegistered);
 
         if (Reslut == false) {
-          return left(faluiresHaveAccount(masseges: 'No'));
+          return left(faluiresHaveAccount(masseges: 'You Have Account'));
         }
         return right(Reslut);
       } catch (e) {

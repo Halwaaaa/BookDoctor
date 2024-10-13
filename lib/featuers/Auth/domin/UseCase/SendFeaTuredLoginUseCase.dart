@@ -16,11 +16,10 @@ class checkIfEmailRegisteredWithGoogle
   Future<Either<faluires, bool>>? call(EntitycheckIfEmailRegistered p) async {
     try {
       await internetConection.checkInternet();
-      return singRepo.checkIfEmailRegisteredWithGoogle(p);
     } catch (e) {
       y(e);
     }
-    return left(unknowfaluires(masseges: "ssss"));
+    return singRepo.checkIfEmailRegisteredWithGoogle(p);
   }
 
   Either<faluires, dynamic> y(dynamic error) {

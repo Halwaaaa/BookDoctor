@@ -7,8 +7,10 @@ class Routers {
   // GoRouter configuration4
   static String Rsing = '/';
   static List<GetPage> getpage = [
-    GetPage(name: Rsing, page: () => const SingView(),
-    binding: BindingsBuilder.put(() => ContrrolSing()),
+    GetPage(
+      name: Rsing,
+      page: () => const SingView(),
+      binding: BindingsBuilder.put(() => SingContrrol()),
     ),
   ];
 
