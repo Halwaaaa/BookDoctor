@@ -75,7 +75,7 @@ class _SingViewState extends State<SingView>
                 child: Boutton(
                   hieght: 50,
                   wdith: 150,
-                  isLoding: false,
+                  isLoding: contrrolSing.Loding,
                   titil: "سجل",
                   ontap: () {
                     contrrolSing.CreateAccout(context);

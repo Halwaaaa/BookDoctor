@@ -31,54 +31,57 @@ class _itemInformationState extends State<itemInformation1>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // DafulteTextForm(
-        //     //controller: cubit.EmailControol,
-        //     title: "البريد الكتروني",
-        //     validator: config.validator),
-        // const SizedBox(
-        //   height: 20,
-        // ),
-        Flexible(
-          child: DafulteTextForm(
-            controller: contrrolSing.emailControol,
-            title: "الاسم ",
-            validator: widget.config.validator,
+    return Form(
+      key: contrrolSing.keyForm1,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // DafulteTextForm(
+          //     //controller: cubit.EmailControol,
+          //     title: "البريد الكتروني",
+          //     validator: config.validator),
+          // const SizedBox(
+          //   height: 20,
+          // ),
+          Flexible(
+            child: DafulteTextForm(
+              controller: contrrolSing.NameController,
+              title: "الاسم ",
+              validator: widget.config.validator,
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Flexible(
-          child: DafulteTextForm(
-            //controller: cubit.phoneControol,
-            title: "الهاتف",
-            validator: (f) {
-              if (f!.isEmpty) {
-                return "الحقل مطلوب";
-              } else if (double.tryParse(f) == null) {
-                return 'الرجاء ادخال رقم صالح';
-              }
-              return null;
-            },
+          const SizedBox(
+            height: 20,
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Flexible(
-          child: DafulteTextForm(
-            controller: contrrolSing.partController,
-            title: "الاختصاص",
-            validator: widget.config.validator,
+          Flexible(
+            child: DafulteTextForm(
+              //controller: cubit.phoneControol,
+              title: "الهاتف",
+              validator: (f) {
+                if (f!.isEmpty) {
+                  return "الحقل مطلوب";
+                } else if (double.tryParse(f) == null) {
+                  return 'الرجاء ادخال رقم صالح';
+                }
+                return null;
+              },
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-      ],
+          const SizedBox(
+            height: 20,
+          ),
+          Flexible(
+            child: DafulteTextForm(
+              controller: contrrolSing.partController,
+              title: "الاختصاص",
+              validator: widget.config.validator,
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
     );
   }
 

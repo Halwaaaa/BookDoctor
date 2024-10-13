@@ -36,58 +36,61 @@ class _itemInformationState extends State<itemInformation2>
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      children: [
-        // DafulteTextForm(
-        //     //controller: cubit.EmailControol,
-        //     title: "البريد الكتروني",
-        //     validator: config.validator),
-        // const SizedBox(
-        //   height: 20,
-        // ),
-        Flexible(
-          child: DafulteTextForm(
-            controller: contrrolSing.emailControol,
-            title: "البريد الكتروني",
-            validator: widget.config.validator,
+    return Form(
+      key: contrrolSing.keyForm2,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // DafulteTextForm(
+          //     //controller: cubit.EmailControol,
+          //     title: "البريد الكتروني",
+          //     validator: config.validator),
+          // const SizedBox(
+          //   height: 20,
+          // ),
+          Flexible(
+            child: DafulteTextForm(
+              controller: contrrolSing.emailControol,
+              title: "البريد الكتروني",
+              validator: widget.config.validator,
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Flexible(
-          child: DafulteTextForm(
-            controller: contrrolSing.passWordControol,
-            title: "كلمة السر",
-            onTap: () {},
-            OnFouc: () {
-              riveControll.IsPassword?.change(true);
-            },
-            NotFouc: () {
-              riveControll.IsPassword?.change(false);
-            },
-            validator: widget.config.validator,
+          const SizedBox(
+            height: 20,
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Flexible(
-          child: DafulteTextForm(
-            readonly: true,
-            onTap: () {
-              contrrolSing.getCv(context);
-            },
-            controller: contrrolSing.cvController,
-            title: " cv",
-            validator: widget.config.validator,
+          Flexible(
+            child: DafulteTextForm(
+              controller: contrrolSing.passWordControol,
+              title: "كلمة السر",
+              onTap: () {},
+              OnFouc: () {
+                riveControll.IsPassword?.change(true);
+              },
+              NotFouc: () {
+                riveControll.IsPassword?.change(false);
+              },
+              validator: widget.config.validator,
+            ),
           ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-      ],
+          const SizedBox(
+            height: 20,
+          ),
+          Flexible(
+            child: DafulteTextForm(
+              readonly: true,
+              onTap: () {
+                contrrolSing.getCv(context);
+              },
+              controller: contrrolSing.FileController,
+              title: " cv",
+              validator: widget.config.validator,
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
     );
   }
 

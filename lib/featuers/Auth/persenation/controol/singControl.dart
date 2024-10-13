@@ -22,6 +22,8 @@ class SingContrrol extends GetxController {
   late TextEditingController partController;
   late TextEditingController cvController;
   late TextEditingController NameController;
+  var keyForm1 = GlobalKey<FormState>();
+  var keyForm2 = GlobalKey<FormState>();
 
   late int index;
 
@@ -32,6 +34,7 @@ class SingContrrol extends GetxController {
   File? FileStorge;
   late CarouselSliderController carouselController;
   late IconData icon;
+  late bool Loding;
   @override
   void onInit() {
     initStauts();
@@ -57,9 +60,21 @@ class SingContrrol extends GetxController {
     update();
   }
 
+  void lodingTrue() {
+    Loding = true;
+    update();
+  }
+
+  void lodingFalse() {
+    Loding = false;
+    update();
+  }
+
   void initStauts() {
     index = 0;
     icon = Icons.arrow_right;
+    Loding = false;
+
     FileController = TextEditingController();
     partController = TextEditingController();
     NameController = TextEditingController();
@@ -76,12 +91,14 @@ class SingContrrol extends GetxController {
 
   void ControolAnimatedAlign(AnimationController controller) {
     if (index == 0) {
-      controller.forward();
-      carouselController
-          .nextPage(duration: const Duration(milliseconds: 500))
-          .then((value) {
-        icon = Icons.arrow_left;
-      });
+      if (keyForm1.currentState!.validate()) {
+        controller.forward();
+        carouselController
+            .nextPage(duration: const Duration(milliseconds: 500))
+            .then((value) {
+          icon = Icons.arrow_left;
+        });
+      }
     } else {
       controller.reverse();
       carouselController
@@ -94,7 +111,10 @@ class SingContrrol extends GetxController {
 
   void CreateAccout(BuildContext context) {
     print("jjj");
-    HaveAccout(context);
+    if (keyForm2.currentState!.validate()) {
+      lodingTrue();
+      HaveAccout(context);
+    }
   }
 
   Future<void> HaveAccout(BuildContext context) async {
@@ -103,6 +123,7 @@ class SingContrrol extends GetxController {
       passWord: passWordControol.text,
     );
     await checkEmail.call(ifEmailRegistered)?.then((value) {
+      lodingFalse();
       value.bimap((l) {
         DafultAwssomeDialog(context, massges: l.masseges).show();
       }, (r) {
@@ -131,7 +152,7 @@ class SingContrrol extends GetxController {
     if (value != null && value.files.single.path != null) {
       final filePath = value.files.single.path!;
       FileStorge = File(filePath);
-      FileController.text = value.files.single.name;
+      FileController.text = value.files.single.name.removeAllWhitespace;
     }
   }
 }
