@@ -1,3 +1,4 @@
+import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/singControl.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/view/Sing.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,10 @@ class Routers {
     GetPage(
       name: Rsing,
       page: () => const SingView(),
-      binding: BindingsBuilder.put(() => SingContrrol()),
+      bindings: [
+        BindingsBuilder.put(() => SingContrrol()),
+        BindingsBuilder.put(() => RiveControll()),
+      ],
     ),
   ];
 
