@@ -1,12 +1,14 @@
+import 'package:bookdoctor/core/componted/DafiltAwssdailog.dart';
 import 'package:bookdoctor/core/componted/DafultTextFormFiled.dart';
 import 'package:bookdoctor/core/constant/config.dart';
+import 'package:bookdoctor/core/servers/permsionFilesServers.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/singControl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
-class itemInformation1 extends StatefulWidget {
-  const itemInformation1({
+class itemInformation2 extends StatefulWidget {
+  const itemInformation2({
     super.key,
     required this.config,
     required,
@@ -15,10 +17,10 @@ class itemInformation1 extends StatefulWidget {
   final Config config;
 
   @override
-  State<itemInformation1> createState() => _itemInformationState();
+  State<itemInformation2> createState() => _itemInformationState();
 }
 
-class _itemInformationState extends State<itemInformation1>
+class _itemInformationState extends State<itemInformation2>
     with SingleTickerProviderStateMixin {
   SingContrrol contrrolSing = Get.find();
 
@@ -44,7 +46,7 @@ class _itemInformationState extends State<itemInformation1>
         Flexible(
           child: DafulteTextForm(
             controller: contrrolSing.emailControol,
-            title: "الاسم ",
+            title: "البريد الكتروني",
             validator: widget.config.validator,
           ),
         ),
@@ -54,15 +56,8 @@ class _itemInformationState extends State<itemInformation1>
         Flexible(
           child: DafulteTextForm(
             //controller: cubit.phoneControol,
-            title: "الهاتف",
-            validator: (f) {
-              if (f!.isEmpty) {
-                return "الحقل مطلوب";
-              } else if (double.tryParse(f) == null) {
-                return 'الرجاء ادخال رقم صالح';
-              }
-              return null;
-            },
+            title: "الاختصاص",
+            validator: widget.config.validator,
           ),
         ),
         const SizedBox(
@@ -70,8 +65,12 @@ class _itemInformationState extends State<itemInformation1>
         ),
         Flexible(
           child: DafulteTextForm(
+            readonly: true,
+            onTap: () {
+              contrrolSing.getCv(context);
+            },
             controller: contrrolSing.passWordControol,
-            title: "كلمة السر ",
+            title: " cv",
             validator: widget.config.validator,
           ),
         ),

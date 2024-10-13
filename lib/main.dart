@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      locale: const Locale('ar'),
       getPages: Routers.getpage,
       //routerConfig: Routers.router,
       title: 'Flutter Demo',
