@@ -70,8 +70,8 @@ class _itemInformationState extends State<itemInformation1>
         ),
         Flexible(
           child: DafulteTextForm(
-            controller: contrrolSing.passWordControol,
-            title: "كلمة السر ",
+            controller: contrrolSing.partController,
+            title: "الاختصاص",
             validator: widget.config.validator,
           ),
         ),

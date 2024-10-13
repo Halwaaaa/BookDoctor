@@ -16,6 +16,8 @@ class DafulteTextForm extends StatefulWidget {
       this.onChanged,
       this.borderSidr,
       this.border,
+      this.NotFouc,
+      this.OnFouc,
       this.prfixIcon});
 
   Config config = Config();
@@ -33,6 +35,8 @@ class DafulteTextForm extends StatefulWidget {
   void Function()? onTap;
   double? hight;
   String? Function(String?)? validator;
+  void Function()? OnFouc;
+  void Function()? NotFouc;
 
   BorderRadius? borderRadius;
 
@@ -52,33 +56,6 @@ class _DafulteTextFormState extends State<DafulteTextForm>
     // TODO: implement initState
     super.initState();
     init();
-  }
-
-  void init() {
-    isfoucs = false;
-    focusNode = FocusNode();
-    controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1),
-    );
-    final curvedAnimation = CurvedAnimation(
-      parent: controller,
-      curve: Curves.slowMiddle, // يمكنك تعديل هذا المنحنى حسب الحاجة
-    );
-    colorAnimation = ColorTween(
-      begin: widget.config.colorAppbar3, // اللون الابتدائي
-      end: const Color.fromRGBO(245, 245, 245, 1), // اللون عند التركيز
-    ).animate(curvedAnimation);
-    focusNode.addListener(() {
-      setState(() {
-        isfoucs = focusNode.hasFocus;
-        if (isfoucs) {
-          controller.forward();
-        } else {
-          controller.reverse();
-        }
-      });
-    });
   }
 
   @override
@@ -171,5 +148,34 @@ class _DafulteTextFormState extends State<DafulteTextForm>
         ),
       ),
     );
+  }
+
+  void init() {
+    isfoucs = false;
+    focusNode = FocusNode();
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+    final curvedAnimation = CurvedAnimation(
+      parent: controller,
+      curve: Curves.slowMiddle, // يمكنك تعديل هذا المنحنى حسب الحاجة
+    );
+    colorAnimation = ColorTween(
+      begin: widget.config.colorAppbar3, // اللون الابتدائي
+      end: const Color.fromRGBO(245, 245, 245, 1), // اللون عند التركيز
+    ).animate(curvedAnimation);
+    focusNode.addListener(() {
+      setState(() {
+        isfoucs = focusNode.hasFocus;
+        if (isfoucs) {
+          widget.OnFouc == null ? null : widget.OnFouc!();
+          controller.forward();
+        } else {
+          widget.NotFouc == null ? null : widget.NotFouc!();
+          controller.reverse();
+        }
+      });
+    });
   }
 }

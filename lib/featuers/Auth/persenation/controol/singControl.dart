@@ -21,6 +21,8 @@ class SingContrrol extends GetxController {
   late TextEditingController FileController;
   late TextEditingController partController;
   late TextEditingController cvController;
+  late TextEditingController NameController;
+
   late int index;
 
   // ignore: prefer_typing_uninitialized_variables
@@ -44,6 +46,7 @@ class SingContrrol extends GetxController {
     cvController.dispose();
     partController.dispose();
     FileController.dispose();
+    NameController.dispose();
     carouselController.reactive.dispose();
 
     super.onClose();
@@ -58,10 +61,14 @@ class SingContrrol extends GetxController {
     index = 0;
     icon = Icons.arrow_right;
     FileController = TextEditingController();
+    partController = TextEditingController();
+    NameController = TextEditingController();
 
     carouselController = CarouselSliderController();
     passWordControol = TextEditingController();
     emailControol = TextEditingController();
+    cvController = TextEditingController();
+
     singReposImplo =
         SingReposImplo(singRemoteDataSousrce: SingRemoteDataSousrceImp());
     checkEmail = checkIfEmailRegisteredWithGoogle(singRepo: singReposImplo);
