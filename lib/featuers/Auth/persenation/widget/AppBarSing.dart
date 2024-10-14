@@ -16,6 +16,7 @@ class AppBarSing extends StatelessWidget {
         SizedBox(
           height: 100,
           child: GetBuilder<RiveControll>(builder: (controll) {
+            print("object");
             return RiveAnimation.asset(
               //  fit: BoxFit.cover,
               AssestImages.Dlogin,

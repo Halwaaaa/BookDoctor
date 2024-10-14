@@ -64,7 +64,7 @@ class _itemInformationState extends State<itemInformation2>
               title: "كلمة السر",
               onTap: () {},
               OnFouc: () {
-                riveControll.IsPassword?.change(true);
+                riveControll.IsPassword?.value = true;
               },
               NotFouc: () {
                 riveControll.IsPassword?.change(false);

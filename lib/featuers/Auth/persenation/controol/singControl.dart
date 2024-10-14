@@ -9,11 +9,14 @@ import 'package:bookdoctor/featuers/Auth/Data/RemotleDataSource/SingRemote.dart'
 import 'package:bookdoctor/featuers/Auth/Data/RepoesImp/SingRepoImpo.dart';
 import 'package:bookdoctor/featuers/Auth/domin/Entitty/checkIfEmailEntity.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/SendFeaTuredLoginUseCase.dart';
+import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
+import 'package:rive/rive.dart';
 
 class SingContrrol extends GetxController {
   late TextEditingController passWordControol;
@@ -89,15 +92,17 @@ class SingContrrol extends GetxController {
     checkEmail = checkIfEmailRegisteredWithGoogle(singRepo: singReposImplo);
   }
 
-  void ControolAnimatedAlign(AnimationController controller) {
+  void ControolAnimatedAlign(
+      AnimationController controller, RiveControll riveControll) {
     if (index == 0) {
       if (keyForm1.currentState!.validate()) {
-        controller.forward();
         carouselController
             .nextPage(duration: const Duration(milliseconds: 500))
             .then((value) {
           icon = Icons.arrow_left;
         });
+      } else {
+        riveControll.FailedStatues();
       }
     } else {
       controller.reverse();
@@ -109,15 +114,16 @@ class SingContrrol extends GetxController {
     }
   }
 
-  void CreateAccout(BuildContext context) {
+  void CreateAccout(BuildContext context, RiveControll riveControll) {
     print("jjj");
     if (keyForm2.currentState!.validate()) {
       lodingTrue();
-      HaveAccout(context);
+      HaveAccout(context, riveControll);
     }
   }
 
-  Future<void> HaveAccout(BuildContext context) async {
+  Future<void> HaveAccout(
+      BuildContext context, RiveControll riveControll) async {
     ifEmailRegistered = EntitycheckIfEmailRegistered(
       Email: emailControol.text,
       passWord: passWordControol.text,

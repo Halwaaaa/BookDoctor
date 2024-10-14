@@ -2,6 +2,7 @@ import 'package:bookdoctor/core/componted/DafultBoutton.dart';
 import 'package:bookdoctor/core/componted/DafultTextFormFiled.dart';
 import 'package:bookdoctor/core/constant/config.dart';
 import 'package:bookdoctor/core/utles/constant.dart';
+import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/singControl.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/AppBarSing.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/HelloText.dart';
@@ -34,6 +35,7 @@ class _SingViewState extends State<SingView>
   @override
   Widget build(BuildContext context) {
     SingContrrol contrrolSing = Get.find();
+    RiveControll riveControll = Get.find();
 
     Config config = Config();
 
@@ -61,7 +63,7 @@ class _SingViewState extends State<SingView>
             ),
             IconButton(
                 onPressed: () {
-                  contrrolSing.ControolAnimatedAlign(controller);
+                  contrrolSing.ControolAnimatedAlign(controller, riveControll);
                 },
                 icon: AnimatedBuilder(
                     animation: controller,
@@ -78,7 +80,7 @@ class _SingViewState extends State<SingView>
                   isLoding: contrrolSing.Loding,
                   titil: "سجل",
                   ontap: () {
-                    contrrolSing.CreateAccout(context);
+                    contrrolSing.CreateAccout(context, riveControll);
                     // cubit.TapSin(context);
                   },
                 ),
