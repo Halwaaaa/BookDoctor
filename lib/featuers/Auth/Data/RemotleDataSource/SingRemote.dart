@@ -6,6 +6,7 @@ import 'package:bookdoctor/featuers/Auth/domin/Entitty/checkIfEmailEntity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 abstract class SingRemoteDataSousrce {
   Future<DocumentReference> SendFeaTuredAskToSing(ModlesAskToSing askToSing);
@@ -20,10 +21,7 @@ class SingRemoteDataSousrceImp extends SingRemoteDataSousrce {
       ModlesAskToSing askToSing) async {
     return await FirebaseFirestore.instance
         .collection('Admain')
-        .add(askToSing.ToMap())
-        .then((value) {
-      return value;
-    });
+        .add(askToSing.ToMap());
   }
 
   @override

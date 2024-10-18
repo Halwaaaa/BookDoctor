@@ -32,7 +32,7 @@ class CustaminformaionAccount extends StatelessWidget {
           scrollPhysics: const NeverScrollableScrollPhysics(),
           // aspectRatio: 1,
           viewportFraction: 1,
-          height: MediaQuery.sizeOf(context).height * 0.4),
+          height: MediaQuery.sizeOf(context).height * 0.5),
     );
   }
 }

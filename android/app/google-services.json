@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "481758311287",
-    "project_id": "user-d71a4",
-    "storage_bucket": "user-d71a4.appspot.com"
+    "project_number": "241485386096",
+    "project_id": "doctor-e9a20",
+    "storage_bucket": "doctor-e9a20.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:481758311287:android:fd5d2e983349cd0c9e2772",
+        "mobilesdk_app_id": "1:241485386096:android:9454b43c97e4c710d4bfb5",
         "android_client_info": {
           "package_name": "com.example.bookdoctor"
         }
@@ -15,26 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCbM4wFKu10Rbw7TVpx_XMvuG9Abg8FavI"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:481758311287:android:abefb4ae1fa607a99e2772",
-        "android_client_info": {
-          "package_name": "com.example.user"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCbM4wFKu10Rbw7TVpx_XMvuG9Abg8FavI"
+          "current_key": "AIzaSyBJtrweOT_sDT3p1aUQr5XYb7uiXj81s-E"
         }
       ],
       "services": {

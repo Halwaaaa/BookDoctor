@@ -4,19 +4,25 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:bookdoctor/core/componted/DafiltAwssdailog.dart';
+import 'package:bookdoctor/core/errors/faliure.dart';
 import 'package:bookdoctor/core/servers/permsionFilesServers.dart';
+import 'package:bookdoctor/core/utles/Get_it.dart';
+import 'package:bookdoctor/featuers/Auth/Data/Modles/ModlesAskToSing.dart';
 import 'package:bookdoctor/featuers/Auth/Data/RemotleDataSource/SingRemote.dart';
 import 'package:bookdoctor/featuers/Auth/Data/RepoesImp/SingRepoImpo.dart';
 import 'package:bookdoctor/featuers/Auth/domin/Entitty/checkIfEmailEntity.dart';
+import 'package:bookdoctor/featuers/Auth/domin/UseCase/AskToSingFeaTuredUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/SendFeaTuredLoginUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:rive/rive.dart';
+import 'package:get_it/get_it.dart';
 
 class SingContrrol extends GetxController {
   late TextEditingController passWordControol;
@@ -114,15 +120,47 @@ class SingContrrol extends GetxController {
     }
   }
 
-  void CreateAccout(BuildContext context, RiveControll riveControll) {
+  Future<void> CreateAccout(
+      BuildContext context, RiveControll riveControll) async {
     print("jjj");
     if (keyForm2.currentState!.validate()) {
+      // await FirebaseStorage.instance.ref('g').putFile(FileStorge!).then((p0) {
+      //   print("zzzzz");
+      //   return p0.state;
+      // }).catchError((h) {
+      //   print(h.toString());
+      // });
+
       lodingTrue();
-      HaveAccout(context, riveControll);
+
+      //  bool? haveAcount = await HaveAccout(context, riveControll);
+
+      // if (haveAcount == true) {
+      //   print("zzzzzzzzzzzzzzzzzzzzzzzzzz");
+      AskToSingFeaTuredUseCase asktosing = AskToSingFeaTuredUseCase(
+          singRepo: SingReposImplo(
+              singRemoteDataSousrce: SingRemoteDataSousrceImp()));
+      ModlesAskToSing modlesAskToSing = ModlesAskToSing(
+          email: emailControol.text,
+          name: NameController.text,
+          part: partController.text,
+          phone: "0000");
+      asktosing.call(modlesAskToSing).then((value) {
+        lodingFalse();
+        value.bimap(
+          (faluires g) =>
+              {print("gggggggggggggggggggggggggggggg"), print(g.masseges)},
+          (r) {
+            print(r.id);
+          },
+        );
+        print(value.toString());
+      });
     }
+    //  }
   }
 
-  Future<void> HaveAccout(
+  Future<bool?> HaveAccout(
       BuildContext context, RiveControll riveControll) async {
     ifEmailRegistered = EntitycheckIfEmailRegistered(
       Email: emailControol.text,
@@ -132,10 +170,12 @@ class SingContrrol extends GetxController {
       lodingFalse();
       value.bimap((l) {
         DafultAwssomeDialog(context, massges: l.masseges).show();
+        return false;
       }, (r) {
-        DafultAwssomeDialog(context, massges: r.toString()).show();
+        return true;
       });
     });
+    return null;
   }
 
   void getCv(BuildContext context) {
