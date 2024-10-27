@@ -1,5 +1,6 @@
 import 'package:bookdoctor/core/componted/DafultTextFormFiled.dart';
 import 'package:bookdoctor/core/constant/config.dart';
+import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/singControl.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,7 @@ class itemInformation1 extends StatefulWidget {
 class _itemInformationState extends State<itemInformation1>
     with SingleTickerProviderStateMixin {
   SingContrrol contrrolSing = Get.find();
+  RiveControll riveControll = Get.find();
 
   @override
   void initState() {
@@ -48,6 +50,12 @@ class _itemInformationState extends State<itemInformation1>
               controller: contrrolSing.NameController,
               title: "الاسم ",
               validator: widget.config.validator,
+              OnFouc: () {
+                riveControll.isFocus!.value = true;
+              },
+              NotFouc: () {
+                riveControll.isFocus!.value = false;
+              },
             ),
           ),
           const SizedBox(
@@ -55,8 +63,14 @@ class _itemInformationState extends State<itemInformation1>
           ),
           Flexible(
             child: DafulteTextForm(
-              //controller: cubit.phoneControol,
+              controller: contrrolSing.PhoneController,
               title: "الهاتف",
+              OnFouc: () {
+                riveControll.isFocus!.value = true;
+              },
+              NotFouc: () {
+                riveControll.isFocus!.value = false;
+              },
               validator: (f) {
                 if (f!.isEmpty) {
                   return "الحقل مطلوب";
@@ -74,6 +88,12 @@ class _itemInformationState extends State<itemInformation1>
             child: DafulteTextForm(
               controller: contrrolSing.partController,
               title: "الاختصاص",
+              OnFouc: () {
+                riveControll.isFocus!.value = true;
+              },
+              NotFouc: () {
+                riveControll.isFocus!.value = false;
+              },
               validator: widget.config.validator,
             ),
           ),

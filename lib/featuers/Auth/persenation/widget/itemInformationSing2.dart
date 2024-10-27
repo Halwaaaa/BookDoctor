@@ -51,6 +51,12 @@ class _itemInformationState extends State<itemInformation2>
           Flexible(
             child: DafulteTextForm(
               controller: contrrolSing.emailControol,
+              OnFouc: () {
+                riveControll.isFocus!.value = true;
+              },
+              NotFouc: () {
+                riveControll.isFocus!.value = false;
+              },
               title: "البريد الكتروني",
               validator: widget.config.validator,
             ),
@@ -82,6 +88,12 @@ class _itemInformationState extends State<itemInformation2>
                 contrrolSing.getCv(context);
               },
               controller: contrrolSing.FileController,
+              OnFouc: () {
+                riveControll.isFocus!.value = true;
+              },
+              NotFouc: () {
+                riveControll.isFocus!.value = false;
+              },
               title: " cv",
               validator: widget.config.validator,
             ),

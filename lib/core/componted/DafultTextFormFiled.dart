@@ -1,4 +1,5 @@
 import 'package:bookdoctor/core/constant/config.dart';
+import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
 import 'package:flutter/material.dart';
 
 class DafulteTextForm extends StatefulWidget {
@@ -36,6 +37,7 @@ class DafulteTextForm extends StatefulWidget {
   double? hight;
   String? Function(String?)? validator;
   void Function()? OnFouc;
+
   void Function()? NotFouc;
 
   BorderRadius? borderRadius;

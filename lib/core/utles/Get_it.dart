@@ -14,8 +14,8 @@ class get_it {
 
   void setup() {
     // تسجيل SingRemoteDataSourceImp كمصدر للبيانات
-    if (!GetIt.instance.isRegistered<SingRemoteDataSousrceImp>()) {
-      GetIt.instance.registerLazySingleton<SingRemoteDataSousrceImp>(
+    if (!getIt.isRegistered<SingRemoteDataSousrceImp>()) {
+      getIt.registerLazySingleton<SingRemoteDataSousrceImp>(
           () => SingRemoteDataSousrceImp());
     }
     getIt.registerLazySingleton<checkIfEmailRegisteredWithGoogle>(() =>

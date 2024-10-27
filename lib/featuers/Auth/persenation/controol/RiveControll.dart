@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 
 import 'package:get/get_connect/http/src/utils/utils.dart';
@@ -6,6 +7,7 @@ import 'package:rive/rive.dart';
 
 class RiveControll extends GetxController {
   late StateMachineController? controllerDrawer;
+  Timer? timer;
   SMIBool? isFocus;
   SMIBool? IsPassword;
   SMITrigger? login_fail;
@@ -42,13 +44,9 @@ class RiveControll extends GetxController {
 
   void FailedStatues() {
     login_fail?.change(true);
-    Future.delayed(const Duration(seconds: 3), () {
-      login_fail?.change(false);
-      isFocus?.change(true);
 
-      print("lll");
-      //is?.value = true;
-      update();
+    timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+      login_fail?.change(true);
     });
   }
 

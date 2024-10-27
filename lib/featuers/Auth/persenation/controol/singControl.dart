@@ -1,5 +1,6 @@
 // ignore_for_file: depend_on_referenced_packages
 
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
@@ -114,6 +115,9 @@ class SingContrrol extends GetxController {
       AnimationController controller, RiveControll riveControll) {
     if (index == 0) {
       if (keyForm1.currentState!.validate()) {
+        riveControll.timer?.cancel();
+        riveControll.login_fail!.value = false;
+
         carouselController
             .nextPage(duration: const Duration(milliseconds: 500))
             .then((value) {
