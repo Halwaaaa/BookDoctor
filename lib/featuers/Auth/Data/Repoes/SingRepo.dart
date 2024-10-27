@@ -10,6 +10,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 
 class SingReposImplo extends SingRepo {
   SingRemoteDataSousrce singRemoteDataSousrce;
@@ -51,9 +52,11 @@ class SingReposImplo extends SingRepo {
   }
 
   @override
-  Future<Either<faluires, TaskSnapshot>> SenedFeaTuredCV(File filecv) async {
+  Future<Either<faluires, Stream<TaskSnapshot>>> SenedFeaTuredCV(
+      File filecv, String uid, BuildContext context) async {
     try {
-      TaskSnapshot result = await singRemoteDataSousrce.SenedFeaTuredCV(filecv);
+      Stream<TaskSnapshot> result =
+          await singRemoteDataSousrce.SenedFeaTuredCV(filecv, uid, context);
       return right(result);
     } catch (erorr) {
       if (erorr is FirebaseException) {

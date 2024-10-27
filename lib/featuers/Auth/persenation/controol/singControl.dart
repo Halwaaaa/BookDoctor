@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bookdoctor/core/componted/DafiltAwssdailog.dart';
 import 'package:bookdoctor/core/errors/faliure.dart';
 import 'package:bookdoctor/core/servers/permsionFilesServers.dart';
@@ -17,6 +18,7 @@ import 'package:bookdoctor/featuers/Auth/domin/Repos/SingRepo.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/AskToSingFeaTuredUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/SendFeaTuredLoginUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
+import 'package:bookdoctor/featuers/Auth/persenation/view/awssomeDailog.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -48,6 +50,8 @@ class SingContrrol extends GetxController {
   late SingReposImplo singReposImplo;
   File? FileStorge;
   late CarouselSliderController carouselController;
+  RxString massges = 'uploadfile'.obs;
+
   late IconData icon;
   late bool Loding;
   late get_it get;
@@ -154,13 +158,13 @@ class SingContrrol extends GetxController {
     Either<faluires, UserCredential> result =
         await singReposImplo.SingWithFirebase(ifEmailRegistered);
     result.bimap((faluires f) {
-      DafultAwssomeDialog(context, massges: f.masseges);
+      DafultAwssomeDialog(context, massges: f.masseges).show();
     }, (UserCredential userCredential) {
-      AskToSing(userCredential.user?.uid);
+      AskToSing(context, userCredential.user?.uid);
     });
   }
 
-  void AskToSing(String? uidDoctor) {
+  void AskToSing(BuildContext context, String? uidDoctor) {
     ModlesAskToSing modlesAskToSing = ModlesAskToSing(
         email: emailControol.text,
         name: NameController.text,
@@ -174,12 +178,40 @@ class SingContrrol extends GetxController {
             {print("gggggggggggggggggggggggggggggg"), print(g.masseges)},
         (r) {
           print(r.id);
+          SenedCVToFirebase(context, uidDoctor!);
         },
       );
     });
   }
 
-  void SenedCVToFirebase() {}
+  void SenedCVToFirebase(
+    BuildContext context,
+    String uid,
+  ) {
+    singReposImplo.SenedFeaTuredCV(FileStorge!, uid, context).then((value) {
+      value.bimap((faluires) {
+        DafultAwssomeDialog(context, massges: faluires.masseges);
+        print(faluires.masseges);
+      }, ((Stream<TaskSnapshot> taskSnapshot) {
+        AwesomeDialog awesomeDialog =
+            DafultAwssomeDialog(context, massges: massges.value);
+
+        awesomeDialog.show();
+        //  DafultAwssomeDialog(context, massges: massges.value).show();
+        taskSnapshot.listen((event) {
+          // navigator?.pop(context);
+          awesomeDialog.dismiss();
+
+          massges.value = "${event.bytesTransferred}of${event.totalBytes}";
+          awesomeDialog = DafultAwssomeDialog(context, massges: massges.value);
+          awesomeDialog.show();
+
+          //  DafultAwssomeDialog(context, massges: massges.value).show();
+        });
+      }));
+    });
+  }
+
   Future<bool?> HaveAccout(
       BuildContext context, RiveControll riveControll) async {
     ifEmailRegistered = EntitycheckIfEmailRegistered(

@@ -8,12 +8,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 
 abstract class SingRepo {
   Future<Either<faluires, DocumentReference>> SendFeaTuredAskToSing(
       ModlesAskToSing askToSing);
 
-  Future<Either<faluires, TaskSnapshot>> SenedFeaTuredCV(File filecv);
+  Future<Either<faluires, Stream<TaskSnapshot>>> SenedFeaTuredCV(
+      File filecv, String uid, BuildContext context);
 
   Future<Either<faluires, bool>> checkIfEmailRegisteredWithGoogle(
       EntitycheckIfEmailRegistered emailRegistered);

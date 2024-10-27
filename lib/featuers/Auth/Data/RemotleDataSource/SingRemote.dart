@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:bookdoctor/core/componted/DafiltAwssdailog.dart';
 import 'package:bookdoctor/core/errors/faliure.dart';
 import 'package:bookdoctor/featuers/Auth/Data/Modles/ModlesAskToSing.dart';
 import 'package:bookdoctor/featuers/Auth/domin/Entitty/AsktoEntity.dart';
@@ -9,13 +11,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 abstract class SingRemoteDataSousrce {
   Future<DocumentReference> SendFeaTuredAskToSing(ModlesAskToSing askToSing);
 
   Future<bool> checkIfEmailRegisteredWithGoogle(
       EntitycheckIfEmailRegistered emailRegistered);
-  Future<TaskSnapshot> SenedFeaTuredCV(File filecv);
+  Future<Stream<TaskSnapshot>> SenedFeaTuredCV(
+      File filecv, String uid, BuildContext context);
 
   Future<UserCredential> SingWithFireBase(
       EntitycheckIfEmailRegistered emailRegistered);
@@ -44,8 +49,32 @@ class SingRemoteDataSousrceImp extends SingRemoteDataSousrce {
   }
 
   @override
-  Future<TaskSnapshot> SenedFeaTuredCV(File filecv) async {
-    return await FirebaseStorage.instance.ref('g').putFile(filecv);
+  Future<Stream<TaskSnapshot>> SenedFeaTuredCV(
+      File filecv, String uid, BuildContext context) async {
+    final storageRef = FirebaseStorage.instance.ref(uid);
+    final uploadTask = storageRef.putFile(filecv);
+    return uploadTask.snapshotEvents;
+  }
+
+  StatefulBuilder uploadfiledata(BuildContext context, UploadTask uploadTask) {
+    return StatefulBuilder(
+      builder: (context, setState) {
+        String massges = "uplodfile";
+
+        AwesomeDialog awesomeDialog =
+            DafultAwssomeDialog(context, massges: massges);
+        awesomeDialog.show();
+        uploadTask.snapshotEvents.listen((event) {
+          setState(
+            () {
+              massges =
+                  "${event.bytesTransferred.ceil()}of${event.totalBytes.ceil()}";
+            },
+          );
+        });
+        return const Text("data");
+      },
+    );
   }
 
   // ignore: non_constant_identifier_names
