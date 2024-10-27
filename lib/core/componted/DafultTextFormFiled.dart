@@ -77,7 +77,7 @@ class _DafulteTextFormState extends State<DafulteTextForm>
       child: AnimatedBuilder(
         animation: controller,
         builder: (context, child) => SizedBox(
-          height: 70,
+          height: 100,
           child: TextFormField(
             focusNode: focusNode,
 
@@ -117,12 +117,12 @@ class _DafulteTextFormState extends State<DafulteTextForm>
                     borderRadius: widget.borderRadius == null
                         ? const BorderRadius.all(Radius.circular(7))
                         : widget.borderRadius!),
-                errorBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: isDark ? Colors.white : Colors.black),
-                    borderRadius: widget.borderRadius == null
-                        ? const BorderRadius.all(Radius.circular(7))
-                        : widget.borderRadius!),
+                // errorBorder: OutlineInputBorder(
+                //     borderSide:
+                //         BorderSide(color: isDark ? Colors.white : Colors.black),
+                //     borderRadius: widget.borderRadius == null
+                //         ? const BorderRadius.all(Radius.circular(7))
+                //         : widget.borderRadius!),
                 enabledBorder: OutlineInputBorder(
                     borderSide: isDark
                         ? const BorderSide(color: Colors.white)

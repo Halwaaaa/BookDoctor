@@ -31,3 +31,9 @@ class faluiresInternet extends faluires {
 class faluiresHaveAccount extends faluires {
   faluiresHaveAccount({required super.masseges});
 }
+
+class faluiresfiebase extends faluires {
+  faluiresfiebase({required super.masseges});
+  factory faluiresfiebase.erorr(FirebaseException exception) =>
+      faluiresfiebase(masseges: exception.message.toString());
+}

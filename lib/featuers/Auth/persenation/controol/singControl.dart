@@ -9,12 +9,15 @@ import 'package:bookdoctor/core/servers/permsionFilesServers.dart';
 import 'package:bookdoctor/core/utles/Get_it.dart';
 import 'package:bookdoctor/featuers/Auth/Data/Modles/ModlesAskToSing.dart';
 import 'package:bookdoctor/featuers/Auth/Data/RemotleDataSource/SingRemote.dart';
+import 'package:bookdoctor/featuers/Auth/Data/Repoes/SingRepo.dart';
 import 'package:bookdoctor/featuers/Auth/Data/RepoesImp/SingRepoImpo.dart';
 import 'package:bookdoctor/featuers/Auth/domin/Entitty/checkIfEmailEntity.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/AskToSingFeaTuredUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/SendFeaTuredLoginUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
 import 'package:carousel_slider/carousel_controller.dart';
+import 'package:dartz/dartz.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
@@ -31,6 +34,7 @@ class SingContrrol extends GetxController {
   late TextEditingController partController;
   late TextEditingController cvController;
   late TextEditingController NameController;
+  late TextEditingController PhoneController;
   var keyForm1 = GlobalKey<FormState>();
   var keyForm2 = GlobalKey<FormState>();
 
@@ -56,6 +60,7 @@ class SingContrrol extends GetxController {
     passWordControol.dispose();
     emailControol.dispose();
     cvController.dispose();
+    PhoneController.dispose();
     partController.dispose();
     FileController.dispose();
     NameController.dispose();
@@ -85,6 +90,7 @@ class SingContrrol extends GetxController {
     Loding = false;
 
     FileController = TextEditingController();
+    PhoneController = TextEditingController();
     partController = TextEditingController();
     NameController = TextEditingController();
 
@@ -124,40 +130,48 @@ class SingContrrol extends GetxController {
       BuildContext context, RiveControll riveControll) async {
     print("jjj");
     if (keyForm2.currentState!.validate()) {
-      // await FirebaseStorage.instance.ref('g').putFile(FileStorge!).then((p0) {
-      //   print("zzzzz");
-      //   return p0.state;
-      // }).catchError((h) {
-      //   print(h.toString());
-      // });
-
-      lodingTrue();
-
-      //  bool? haveAcount = await HaveAccout(context, riveControll);
-
-      // if (haveAcount == true) {
-      //   print("zzzzzzzzzzzzzzzzzzzzzzzzzz");
-      AskToSingFeaTuredUseCase asktosing = AskToSingFeaTuredUseCase(
-          singRepo: SingReposImplo(
-              singRemoteDataSousrce: SingRemoteDataSousrceImp()));
-      ModlesAskToSing modlesAskToSing = ModlesAskToSing(
-          email: emailControol.text,
-          name: NameController.text,
-          part: partController.text,
-          phone: "0000");
-      asktosing.call(modlesAskToSing).then((value) {
-        lodingFalse();
-        value.bimap(
-          (faluires g) =>
-              {print("gggggggggggggggggggggggggggggg"), print(g.masseges)},
-          (r) {
-            print(r.id);
-          },
-        );
-        print(value.toString());
-      });
+      //  if (await HaveAccout(context, riveControll) == true) {
+      print("kkkkkkkkkkkkkkkkkkkkkkkkkkk");
+      singWithFirbse(context);
+      // }
     }
     //  }
+  }
+
+  Future<void> singWithFirbse(BuildContext context) async {
+    SingReposImplo firebase =
+        SingReposImplo(singRemoteDataSousrce: SingRemoteDataSousrceImp());
+    ifEmailRegistered = EntitycheckIfEmailRegistered(
+        Email: emailControol.text, passWord: passWordControol.text);
+    Either<faluires, UserCredential> result =
+        await firebase.SingWithFirebase(ifEmailRegistered);
+    result.bimap((faluires f) {
+      DafultAwssomeDialog(context, massges: f.masseges);
+    }, (UserCredential userCredential) {
+      AskToSing(userCredential.user?.uid);
+    });
+  }
+
+  void AskToSing(String? uidDoctor) {
+    AskToSingFeaTuredUseCase asktosing =
+        get_it().getIt<AskToSingFeaTuredUseCase>();
+
+    ModlesAskToSing modlesAskToSing = ModlesAskToSing(
+        email: emailControol.text,
+        name: NameController.text,
+        part: partController.text,
+        phone: PhoneController.text,
+        Uid: uidDoctor);
+    asktosing.call(modlesAskToSing).then((value) {
+      lodingFalse();
+      value.bimap(
+        (faluires g) =>
+            {print("gggggggggggggggggggggggggggggg"), print(g.masseges)},
+        (r) {
+          print(r.id);
+        },
+      );
+    });
   }
 
   Future<bool?> HaveAccout(

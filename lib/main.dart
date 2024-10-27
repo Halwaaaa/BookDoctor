@@ -3,6 +3,7 @@ import 'package:bookdoctor/core/servers/EmailSender.dart';
 import 'package:bookdoctor/core/servers/emailvel.dart';
 import 'package:bookdoctor/core/utles/Get_it.dart';
 import 'package:bookdoctor/core/utles/router.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // Get_it.g();
+    get_it().setup();
     return GetMaterialApp(
       locale: const Locale('ar'),
       getPages: Routers.getpage,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bookdoctor/core/errors/faliure.dart';
 import 'package:bookdoctor/featuers/Auth/Data/Modles/ModlesAskToSing.dart';
 import 'package:bookdoctor/featuers/Auth/domin/Entitty/AsktoEntity.dart';
@@ -13,6 +15,10 @@ abstract class SingRemoteDataSousrce {
 
   Future<bool> checkIfEmailRegisteredWithGoogle(
       EntitycheckIfEmailRegistered emailRegistered);
+  Future<TaskSnapshot> SenedFeaTuredCV(File filecv);
+
+  Future<UserCredential> SingWithFireBase(
+      EntitycheckIfEmailRegistered emailRegistered);
 }
 
 class SingRemoteDataSousrceImp extends SingRemoteDataSousrce {
@@ -20,7 +26,7 @@ class SingRemoteDataSousrceImp extends SingRemoteDataSousrce {
   Future<DocumentReference> SendFeaTuredAskToSing(
       ModlesAskToSing askToSing) async {
     return await FirebaseFirestore.instance
-        .collection('Admain')
+        .collection("DoctorAskToSing")
         .add(askToSing.ToMap());
   }
 
@@ -28,12 +34,25 @@ class SingRemoteDataSousrceImp extends SingRemoteDataSousrce {
   Future<bool> checkIfEmailRegisteredWithGoogle(
       EntitycheckIfEmailRegistered emailRegistered) async {
     // TODO: implement checkIfEmailRegisteredWithGoogle
-    List<String> data = await FirebaseAuth.instance
+    List<String>? data = await FirebaseAuth.instance
         .fetchSignInMethodsForEmail(emailRegistered.Email!);
 
     if (data.isNotEmpty) {
       return false;
     }
     return true;
+  }
+
+  @override
+  Future<TaskSnapshot> SenedFeaTuredCV(File filecv) async {
+    return await FirebaseStorage.instance.ref('g').putFile(filecv);
+  }
+
+  // ignore: non_constant_identifier_names
+  @override
+  Future<UserCredential> SingWithFireBase(
+      EntitycheckIfEmailRegistered emailRegistered) async {
+    return await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailRegistered.Email!, password: emailRegistered.passWord!);
   }
 }
