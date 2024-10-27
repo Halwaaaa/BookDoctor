@@ -2,22 +2,31 @@ import 'package:bookdoctor/featuers/Auth/Data/RemotleDataSource/SingRemote.dart'
 import 'package:bookdoctor/featuers/Auth/Data/Repoes/SingRepo.dart';
 import 'package:bookdoctor/featuers/Auth/domin/Repos/SingRepo.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/AskToSingFeaTuredUseCase.dart';
+import 'package:bookdoctor/featuers/Auth/domin/UseCase/SendFeaTuredLoginUseCase.dart';
 import 'package:get_it/get_it.dart';
 
 class get_it {
-  final getIt = GetIt.instance;
+  final GetIt getIt = GetIt.instance;
+
+  void dispose() {
+    GetIt.instance.reset();
+  }
 
   void setup() {
     // تسجيل SingRemoteDataSourceImp كمصدر للبيانات
-    getIt.registerCachedFactory<SingRemoteDataSousrce>(
-        () => SingRemoteDataSousrceImp());
+    if (!GetIt.instance.isRegistered<SingRemoteDataSousrceImp>()) {
+      GetIt.instance.registerLazySingleton<SingRemoteDataSousrceImp>(
+          () => SingRemoteDataSousrceImp());
+    }
+    getIt.registerLazySingleton<checkIfEmailRegisteredWithGoogle>(() =>
+        checkIfEmailRegisteredWithGoogle(singRepo: getIt<SingReposImplo>()));
 
     // تسجيل SingReposImplo كمستودع
-    getIt.registerCachedFactory<SingRepo>(() =>
-        SingReposImplo(singRemoteDataSousrce: getIt<SingRemoteDataSousrce>()));
+    getIt.registerLazySingleton<SingReposImplo>(() => SingReposImplo(
+        singRemoteDataSousrce: getIt<SingRemoteDataSousrceImp>()));
 
     // تسجيل AskToSingFeaTuredUseCase كحالة استخدام
-    getIt.registerCachedFactory<AskToSingFeaTuredUseCase>(
-        () => AskToSingFeaTuredUseCase(singRepo: getIt<SingRepo>()));
+    getIt.registerLazySingleton<AskToSingFeaTuredUseCase>(
+        () => AskToSingFeaTuredUseCase(singRepo: getIt<SingReposImplo>()));
   }
 }

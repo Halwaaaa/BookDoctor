@@ -12,6 +12,7 @@ import 'package:bookdoctor/featuers/Auth/Data/RemotleDataSource/SingRemote.dart'
 import 'package:bookdoctor/featuers/Auth/Data/Repoes/SingRepo.dart';
 import 'package:bookdoctor/featuers/Auth/Data/RepoesImp/SingRepoImpo.dart';
 import 'package:bookdoctor/featuers/Auth/domin/Entitty/checkIfEmailEntity.dart';
+import 'package:bookdoctor/featuers/Auth/domin/Repos/SingRepo.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/AskToSingFeaTuredUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/SendFeaTuredLoginUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
@@ -48,6 +49,8 @@ class SingContrrol extends GetxController {
   late CarouselSliderController carouselController;
   late IconData icon;
   late bool Loding;
+  late get_it get;
+  late AskToSingFeaTuredUseCase asktosing;
   @override
   void onInit() {
     initStauts();
@@ -98,10 +101,13 @@ class SingContrrol extends GetxController {
     passWordControol = TextEditingController();
     emailControol = TextEditingController();
     cvController = TextEditingController();
+    get = get_it();
+    get.dispose();
 
-    singReposImplo =
-        SingReposImplo(singRemoteDataSousrce: SingRemoteDataSousrceImp());
-    checkEmail = checkIfEmailRegisteredWithGoogle(singRepo: singReposImplo);
+    singReposImplo = get.getIt<SingReposImplo>();
+    asktosing = get_it().getIt<AskToSingFeaTuredUseCase>();
+
+    checkEmail = get.getIt<checkIfEmailRegisteredWithGoogle>();
   }
 
   void ControolAnimatedAlign(
@@ -139,12 +145,10 @@ class SingContrrol extends GetxController {
   }
 
   Future<void> singWithFirbse(BuildContext context) async {
-    SingReposImplo firebase =
-        SingReposImplo(singRemoteDataSousrce: SingRemoteDataSousrceImp());
     ifEmailRegistered = EntitycheckIfEmailRegistered(
         Email: emailControol.text, passWord: passWordControol.text);
     Either<faluires, UserCredential> result =
-        await firebase.SingWithFirebase(ifEmailRegistered);
+        await singReposImplo.SingWithFirebase(ifEmailRegistered);
     result.bimap((faluires f) {
       DafultAwssomeDialog(context, massges: f.masseges);
     }, (UserCredential userCredential) {
@@ -153,9 +157,6 @@ class SingContrrol extends GetxController {
   }
 
   void AskToSing(String? uidDoctor) {
-    AskToSingFeaTuredUseCase asktosing =
-        get_it().getIt<AskToSingFeaTuredUseCase>();
-
     ModlesAskToSing modlesAskToSing = ModlesAskToSing(
         email: emailControol.text,
         name: NameController.text,
@@ -174,6 +175,7 @@ class SingContrrol extends GetxController {
     });
   }
 
+  void SenedCVToFirebase() {}
   Future<bool?> HaveAccout(
       BuildContext context, RiveControll riveControll) async {
     ifEmailRegistered = EntitycheckIfEmailRegistered(
