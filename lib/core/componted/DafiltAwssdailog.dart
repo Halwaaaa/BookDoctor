@@ -11,12 +11,14 @@ AwesomeDialog DafultAwssomeDialog(
   String? labelTitle,
   required String massges,
   void Function()? btnOkOnPress,
+  String? massgesdes,
 }) {
   return AwesomeDialog(
       dialogBackgroundColor: Colors.white,
       barrierColor: const Color.fromRGBO(160, 160, 160, 0.41),
       context: context,
       title: title,
+      desc: massgesdes,
       titleTextStyle: const TextStyle(
         color: Color.fromRGBO(255, 0, 0, 1),
         fontSize: 15,

@@ -9,6 +9,7 @@ import 'package:bookdoctor/core/componted/DafiltAwssdailog.dart';
 import 'package:bookdoctor/core/errors/faliure.dart';
 import 'package:bookdoctor/core/servers/permsionFilesServers.dart';
 import 'package:bookdoctor/core/utles/Get_it.dart';
+import 'package:bookdoctor/core/utles/router.dart';
 import 'package:bookdoctor/featuers/Auth/Data/Modles/ModlesAskToSing.dart';
 import 'package:bookdoctor/featuers/Auth/Data/RemotleDataSource/SingRemote.dart';
 import 'package:bookdoctor/featuers/Auth/Data/Repoes/SingRepo.dart';
@@ -193,21 +194,23 @@ class SingContrrol extends GetxController {
         DafultAwssomeDialog(context, massges: faluires.masseges);
         print(faluires.masseges);
       }, ((Stream<TaskSnapshot> taskSnapshot) {
-        AwesomeDialog awesomeDialog =
-            DafultAwssomeDialog(context, massges: massges.value);
+        Get.offAllNamed(Routers.Rawssemdailog,
+            arguments: {'Stream<TaskSnapshot>': Stream<TaskSnapshot>});
+        // AwesomeDialog awesomeDialog =
+        //     DafultAwssomeDialog(context, massges: massges.value);
 
-        awesomeDialog.show();
-        //  DafultAwssomeDialog(context, massges: massges.value).show();
-        taskSnapshot.listen((event) {
-          // navigator?.pop(context);
-          awesomeDialog.dismiss();
+        // awesomeDialog.show();
+        // //  DafultAwssomeDialog(context, massges: massges.value).show();
+        // taskSnapshot.listen((event) {
+        //   // navigator?.pop(context);
+        //   awesomeDialog.dismiss();
 
-          massges.value = "${event.bytesTransferred}of${event.totalBytes}";
-          awesomeDialog = DafultAwssomeDialog(context, massges: massges.value);
-          awesomeDialog.show();
+        //   massges.value = "${event.bytesTransferred}of${event.totalBytes}";
+        //   awesomeDialog = DafultAwssomeDialog(context, massges: massges.value);
+        //   awesomeDialog.show();
 
-          //  DafultAwssomeDialog(context, massges: massges.value).show();
-        });
+        //   //  DafultAwssomeDialog(context, massges: massges.value).show();
+//        });
       }));
     });
   }
