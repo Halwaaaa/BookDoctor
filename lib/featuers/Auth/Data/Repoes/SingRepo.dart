@@ -52,10 +52,10 @@ class SingReposImplo extends SingRepo {
   }
 
   @override
-  Future<Either<faluires, Stream<TaskSnapshot>>> SenedFeaTuredCV(
+  Future<Either<faluires, UploadTask>> SenedFeaTuredCV(
       File filecv, String uid, BuildContext context) async {
     try {
-      Stream<TaskSnapshot> result =
+      UploadTask result =
           await singRemoteDataSousrce.SenedFeaTuredCV(filecv, uid, context);
       return right(result);
     } catch (erorr) {
