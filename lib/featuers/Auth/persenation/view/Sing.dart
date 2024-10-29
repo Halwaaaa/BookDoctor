@@ -44,53 +44,74 @@ class _SingViewState extends State<SingView>
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: IntrinsicHeight(
-          child: Column(
+          child: Stack(
             children: [
-              const SizedBox(
-                height: 40,
+              GetBuilder<SingContrrol>(
+                builder: (controller) {
+                  if (contrrolSing.Loding == true) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+
+                  return const SizedBox.shrink();
+                },
               ),
-              const AppBarSing(),
-              const HelloText(),
-              const SizedBox(
-                height: 40,
-              ),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Form(
-                  //key: cubit.keyform,
-                  child: CustaminformaionAccount(
-                      config: config, singContrrol: contrrolSing),
-                ),
-              ),
-              IconButton(
-                  onPressed: () {
-                    contrrolSing.ControolAnimatedAlign(
-                        controller, riveControll);
-                  },
-                  icon: AnimatedBuilder(
-                      animation: controller,
-                      builder: (context, child) => AlignTransition(
-                          alignment: AlignAnimation,
-                          child: Icon(contrrolSing.icon)))),
-              GetBuilder<SingContrrol>(builder: (con) {
-                return Visibility(
-                  visible: contrrolSing.index == 0 ? false : true,
-                  //replacement: const Text('lll'),
-                  child: Boutton(
-                    hieght: 50,
-                    wdith: 150,
-                    isLoding: contrrolSing.Loding,
-                    titil: "سجل",
-                    ontap: () {
-                      contrrolSing.CreateAccout(context, riveControll);
-                      // cubit.TapSin(context);
-                    },
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(
+                    height: 40,
                   ),
-                );
-              }),
-              const SizedBox(
-                height: 40,
-              )
+                  const AppBarSing(),
+                  const HelloText(),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Form(
+                      //key: cubit.keyform,
+                      child: CustaminformaionAccount(
+                          config: config, singContrrol: contrrolSing),
+                    ),
+                  ),
+                  GetBuilder<SingContrrol>(builder: (con) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Visibility(
+                          visible: contrrolSing.index != 0 ? false : true,
+                          child: IconButton(
+                              alignment: AlignmentDirectional.topStart,
+                              onPressed: () {
+                                con.ControolAnimatedAlign(
+                                    controller, riveControll, context);
+                              },
+                              icon: const Icon(Icons.arrow_right)),
+                        ),
+                        Visibility(
+                          visible: con.index == 0 ? false : true,
+                          //replacement: const Text('lll'),
+                          child: Boutton(
+                            hieght: 50,
+                            wdith: 150,
+                            isLoding: con.Loding,
+                            titil: "سجل",
+                            ontap: () {
+                              contrrolSing.SenedAskToSing(
+                                  context, riveControll);
+                              // cubit.TapSin(context);
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+                  const SizedBox(
+                    height: 40,
+                  )
+                ],
+              ),
             ],
           ),
         ),

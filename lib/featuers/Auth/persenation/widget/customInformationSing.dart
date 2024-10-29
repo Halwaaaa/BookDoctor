@@ -20,8 +20,8 @@ class CustaminformaionAccount extends StatelessWidget {
     return CarouselSlider(
       carouselController: singContrrol.carouselController,
       items: [
-        itemInformation1(config: config),
         itemInformation2(config: config),
+        itemInformation1(config: config),
       ],
       options: CarouselOptions(
           onPageChanged: (index, reason) {

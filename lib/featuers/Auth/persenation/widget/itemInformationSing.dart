@@ -100,6 +100,23 @@ class _itemInformationState extends State<itemInformation1>
           const SizedBox(
             height: 20,
           ),
+          Flexible(
+            child: DafulteTextForm(
+              readonly: true,
+              onTap: () {
+                contrrolSing.getCv(context);
+              },
+              controller: contrrolSing.FileController,
+              OnFouc: () {
+                riveControll.isFocus!.value = true;
+              },
+              NotFouc: () {
+                riveControll.isFocus!.value = false;
+              },
+              title: " cv",
+              validator: widget.config.validator,
+            ),
+          ),
         ],
       ),
     );

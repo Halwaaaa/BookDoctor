@@ -18,11 +18,15 @@ class AwssomeDailogView extends StatelessWidget {
         body: StreamBuilder(
       stream: taskSnapshotStream,
       builder: (context, snapshot) {
+        TaskSnapshot? taskSnapashot = snapshot.data;
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
         }
         if (snapshot.data?.state == TaskState.running) {
-          return const DetailsSened();
+          return DetailsSened(
+            bytesTransferred: taskSnapashot?.bytesTransferred,
+            totalLenght: taskSnapashot?.totalBytes,
+          );
         } else if (snapshot.data?.state == TaskState.success) {
           return const loginview();
         }

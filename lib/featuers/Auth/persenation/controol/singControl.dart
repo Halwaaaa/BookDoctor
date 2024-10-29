@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:bookdoctor/core/componted/DafiltAwssdailog.dart';
 import 'package:bookdoctor/core/errors/faliure.dart';
+import 'package:bookdoctor/core/servers/SharedPrefrance.dart';
 import 'package:bookdoctor/core/servers/permsionFilesServers.dart';
 import 'package:bookdoctor/core/utles/Get_it.dart';
 import 'package:bookdoctor/core/utles/router.dart';
@@ -40,6 +41,7 @@ class SingContrrol extends GetxController {
   late TextEditingController cvController;
   late TextEditingController NameController;
   late TextEditingController PhoneController;
+  late SharedPrefrance sharedPrefrance;
   var keyForm1 = GlobalKey<FormState>();
   var keyForm2 = GlobalKey<FormState>();
 
@@ -97,6 +99,7 @@ class SingContrrol extends GetxController {
     index = 0;
     icon = Icons.arrow_right;
     Loding = false;
+    sharedPrefrance = Get.find();
 
     FileController = TextEditingController();
     PhoneController = TextEditingController();
@@ -116,18 +119,14 @@ class SingContrrol extends GetxController {
     checkEmail = get.getIt<checkIfEmailRegisteredWithGoogle>();
   }
 
-  void ControolAnimatedAlign(
-      AnimationController controller, RiveControll riveControll) {
+  void ControolAnimatedAlign(AnimationController controller,
+      RiveControll riveControll, BuildContext context) {
     if (index == 0) {
-      if (keyForm1.currentState!.validate()) {
+      if (keyForm2.currentState!.validate()) {
         riveControll.timer?.cancel();
         riveControll.login_fail!.value = false;
-
-        carouselController
-            .nextPage(duration: const Duration(milliseconds: 500))
-            .then((value) {
-          icon = Icons.arrow_left;
-        });
+        lodingTrue();
+        singWithFirbse(context);
       } else {
         riveControll.FailedStatues();
       }
@@ -141,7 +140,7 @@ class SingContrrol extends GetxController {
     }
   }
 
-  Future<void> CreateAccout(
+  Future<void> SenedAskToSing(
       BuildContext context, RiveControll riveControll) async {
     print("jjj");
     if (keyForm2.currentState!.validate()) {
@@ -158,10 +157,17 @@ class SingContrrol extends GetxController {
         Email: emailControol.text, passWord: passWordControol.text);
     Either<faluires, UserCredential> result =
         await singReposImplo.SingWithFirebase(ifEmailRegistered);
+    lodingFalse();
     result.bimap((faluires f) {
       DafultAwssomeDialog(context, massges: f.masseges).show();
     }, (UserCredential userCredential) {
-      AskToSing(context, userCredential.user?.uid);
+      sharedPrefrance.sharedPreferences
+          ?.setString('UID', userCredential.user!.uid);
+      carouselController
+          .nextPage(duration: const Duration(milliseconds: 500))
+          .then((value) {
+        icon = Icons.arrow_left;
+      });
     });
   }
 
@@ -171,7 +177,7 @@ class SingContrrol extends GetxController {
         name: NameController.text,
         part: partController.text,
         phone: PhoneController.text,
-        Uid: uidDoctor);
+        Uid: "ll");
     asktosing.call(modlesAskToSing).then((value) {
       lodingFalse();
       value.bimap(
@@ -195,7 +201,7 @@ class SingContrrol extends GetxController {
         print(faluires.masseges);
       }, ((Stream<TaskSnapshot> taskSnapshot) {
         Get.offAllNamed(Routers.Rawssemdailog,
-            arguments: {'Stream<TaskSnapshot>': Stream<TaskSnapshot>});
+            arguments: {'Stream<TaskSnapshot>': taskSnapshot});
         // AwesomeDialog awesomeDialog =
         //     DafultAwssomeDialog(context, massges: massges.value);
 

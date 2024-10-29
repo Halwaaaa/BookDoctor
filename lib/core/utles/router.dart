@@ -14,7 +14,7 @@ class Routers {
       name: Rsing,
       page: () => const SingView(),
       bindings: [
-        BindingsBuilder.put(() => SingContrrol()),
+        BindingsBuilder.put(() => SingContrrol(), permanent: true),
         BindingsBuilder.put(() => RiveControll()),
       ],
     ),
