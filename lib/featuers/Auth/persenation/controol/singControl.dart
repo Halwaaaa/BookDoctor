@@ -20,7 +20,6 @@ import 'package:bookdoctor/featuers/Auth/domin/Repos/SingRepo.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/AskToSingFeaTuredUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/SendFeaTuredLoginUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
-import 'package:bookdoctor/featuers/Auth/persenation/view/awssomeDailog.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,11 +41,15 @@ class SingContrrol extends GetxController {
   late TextEditingController NameController;
   late TextEditingController PhoneController;
   late SharedPrefrance sharedPrefrance;
+  late AwesomeDialog awesomeDialog;
   var keyForm1 = GlobalKey<FormState>();
   var keyForm2 = GlobalKey<FormState>();
   late int initPages;
 
   late int index;
+  late int bytesTransferred;
+  late int totalLenghtFile;
+  late int AnimatedBytesTransferred;
 
   // ignore: prefer_typing_uninitialized_variables
   late checkIfEmailRegisteredWithGoogle checkEmail;
@@ -57,6 +60,7 @@ class SingContrrol extends GetxController {
   RxString massges = 'uploadfile'.obs;
 
   late IconData icon;
+  late UploadTask uploadTask;
   late bool Loding;
   late get_it get;
   late AskToSingFeaTuredUseCase asktosing;
@@ -99,11 +103,15 @@ class SingContrrol extends GetxController {
   void initStauts() {
     index = 0;
     icon = Icons.arrow_right;
+    AnimatedBytesTransferred = 0;
     Loding = false;
     sharedPrefrance = Get.find();
     sharedPrefrance.sharedPreferences?.getString('UID') == null
         ? initPages = 0
         : initPages = 1;
+
+    totalLenghtFile = 0;
+    bytesTransferred = 0;
 
     FileController = TextEditingController();
     PhoneController = TextEditingController();
@@ -147,10 +155,10 @@ class SingContrrol extends GetxController {
   Future<void> SenedAskToSing(
       BuildContext context, RiveControll riveControll) async {
     print("jjj");
-    if (keyForm2.currentState!.validate()) {
+    if (keyForm1.currentState!.validate()) {
       //  if (await HaveAccout(context, riveControll) == true) {
       print("kkkkkkkkkkkkkkkkkkkkkkkkkkk");
-      singWithFirbse(context);
+      _AskToSing(context, sharedPrefrance.sharedPreferences?.getString('UID'));
       // }
     }
     //  }
@@ -175,13 +183,13 @@ class SingContrrol extends GetxController {
     });
   }
 
-  void AskToSing(BuildContext context, String? uidDoctor) {
+  void _AskToSing(BuildContext context, String? uidDoctor) {
     ModlesAskToSing modlesAskToSing = ModlesAskToSing(
         email: emailControol.text,
         name: NameController.text,
         part: partController.text,
         phone: PhoneController.text,
-        Uid: "ll");
+        Uid: uidDoctor);
     asktosing.call(modlesAskToSing).then((value) {
       lodingFalse();
       value.bimap(
@@ -189,13 +197,13 @@ class SingContrrol extends GetxController {
             {print("gggggggggggggggggggggggggggggg"), print(g.masseges)},
         (r) {
           print(r.id);
-          SenedCVToFirebase(context, uidDoctor!);
+          _SenedCVToFirebase(context, uidDoctor!);
         },
       );
     });
   }
 
-  void SenedCVToFirebase(
+  void _SenedCVToFirebase(
     BuildContext context,
     String uid,
   ) {
@@ -203,25 +211,40 @@ class SingContrrol extends GetxController {
       value.bimap((faluires) {
         DafultAwssomeDialog(context, massges: faluires.masseges);
         print(faluires.masseges);
-      }, ((Stream<TaskSnapshot> taskSnapshot) {
-        Get.offAllNamed(Routers.Rawssemdailog,
-            arguments: {'Stream<TaskSnapshot>': taskSnapshot});
-        // AwesomeDialog awesomeDialog =
-        //     DafultAwssomeDialog(context, massges: massges.value);
+      }, ((UploadTask uploadTask) {
+        uploadTask = uploadTask;
 
-        // awesomeDialog.show();
-        // //  DafultAwssomeDialog(context, massges: massges.value).show();
-        // taskSnapshot.listen((event) {
-        //   // navigator?.pop(context);
-        //   awesomeDialog.dismiss();
-
-        //   massges.value = "${event.bytesTransferred}of${event.totalBytes}";
-        //   awesomeDialog = DafultAwssomeDialog(context, massges: massges.value);
-        //   awesomeDialog.show();
-
-        //   //  DafultAwssomeDialog(context, massges: massges.value).show();
-//        });
+        awesomeDialog.show();
+        _cvSendListen(uploadTask, awesomeDialog, context);
       }));
+    });
+  }
+
+  void _cvSendListen(UploadTask uploadTask, AwesomeDialog awesomeDialog,
+      BuildContext context) {
+    uploadTask.snapshotEvents.first.then((value) {
+      totalLenghtFile = value.totalBytes;
+      update();
+    });
+
+    uploadTask.snapshotEvents.listen((event) {
+      if (event.state == TaskState.running) {
+        AnimatedBytesTransferred = event.bytesTransferred - bytesTransferred;
+        bytesTransferred = event.bytesTransferred;
+        update();
+      } else if (event.state == TaskState.success) {
+        awesomeDialog.dismiss();
+        DafultAwssomeDialog(context, massges: event.state.name);
+      } else if (event.state == TaskState.error) {
+        awesomeDialog.dismiss();
+        DafultAwssomeDialog(context, massges: event.state.name);
+      }
+    });
+  }
+
+  void cancelSenedCv() {
+    uploadTask.cancel().then((value) {
+      awesomeDialog.dismiss();
     });
   }
 
@@ -243,7 +266,7 @@ class SingContrrol extends GetxController {
     return null;
   }
 
-  void getCv(BuildContext context) {
+  void getCvFromMobile(BuildContext context) {
     ServersPermsionFiles.requestStoragePermission().then((value) async {
       await FilePicker.platform.pickFiles(
         onFileLoading: (p0) {

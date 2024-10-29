@@ -104,7 +104,7 @@ class _itemInformationState extends State<itemInformation1>
             child: DafulteTextForm(
               readonly: true,
               onTap: () {
-                contrrolSing.getCv(context);
+                contrrolSing.getCvFromMobile(context);
               },
               controller: contrrolSing.FileController,
               OnFouc: () {

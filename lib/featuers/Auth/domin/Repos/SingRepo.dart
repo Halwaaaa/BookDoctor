@@ -14,7 +14,7 @@ abstract class SingRepo {
   Future<Either<faluires, DocumentReference>> SendFeaTuredAskToSing(
       ModlesAskToSing askToSing);
 
-  Future<Either<faluires, Stream<TaskSnapshot>>> SenedFeaTuredCV(
+  Future<Either<faluires, UploadTask>> SenedFeaTuredCV(
       File filecv, String uid, BuildContext context);
 
   Future<Either<faluires, bool>> checkIfEmailRegisteredWithGoogle(

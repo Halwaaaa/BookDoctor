@@ -1,7 +1,6 @@
 import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/singControl.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/view/Sing.dart';
-import 'package:bookdoctor/featuers/Auth/persenation/view/awssomeDailog.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -18,7 +17,6 @@ class Routers {
         BindingsBuilder.put(() => RiveControll()),
       ],
     ),
-    GetPage(name: Rawssemdailog, page: () => const AwssomeDailogView())
   ];
 
   static GoRouter router = GoRouter(

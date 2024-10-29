@@ -19,7 +19,7 @@ abstract class SingRemoteDataSousrce {
 
   Future<bool> checkIfEmailRegisteredWithGoogle(
       EntitycheckIfEmailRegistered emailRegistered);
-  Future<Stream<TaskSnapshot>> SenedFeaTuredCV(
+  Future<UploadTask> SenedFeaTuredCV(
       File filecv, String uid, BuildContext context);
 
   Future<UserCredential> SingWithFireBase(
@@ -49,32 +49,11 @@ class SingRemoteDataSousrceImp extends SingRemoteDataSousrce {
   }
 
   @override
-  Future<Stream<TaskSnapshot>> SenedFeaTuredCV(
+  Future<UploadTask> SenedFeaTuredCV(
       File filecv, String uid, BuildContext context) async {
     final storageRef = FirebaseStorage.instance.ref(uid);
     final uploadTask = storageRef.putFile(filecv);
-    return uploadTask.snapshotEvents;
-  }
-
-  StatefulBuilder uploadfiledata(BuildContext context, UploadTask uploadTask) {
-    return StatefulBuilder(
-      builder: (context, setState) {
-        String massges = "uplodfile";
-
-        AwesomeDialog awesomeDialog =
-            DafultAwssomeDialog(context, massges: massges);
-        awesomeDialog.show();
-        uploadTask.snapshotEvents.listen((event) {
-          setState(
-            () {
-              massges =
-                  "${event.bytesTransferred.ceil()}of${event.totalBytes.ceil()}";
-            },
-          );
-        });
-        return const Text("data");
-      },
-    );
+    return uploadTask;
   }
 
   // ignore: non_constant_identifier_names
