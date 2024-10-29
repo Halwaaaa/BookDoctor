@@ -11,11 +11,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:email_validator/email_validator.dart';
 
 Future<void> main() async {
-  initServer();
-
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
+  await initServer();
 
   runApp(const MyApp());
 }

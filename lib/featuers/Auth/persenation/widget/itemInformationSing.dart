@@ -45,7 +45,7 @@ class _itemInformationState extends State<itemInformation1>
           // const SizedBox(
           //   height: 20,
           // ),
-          Flexible(
+          Expanded(
             child: DafulteTextForm(
               controller: contrrolSing.NameController,
               title: "الاسم ",
@@ -61,7 +61,7 @@ class _itemInformationState extends State<itemInformation1>
           const SizedBox(
             height: 20,
           ),
-          Flexible(
+          Expanded(
             child: DafulteTextForm(
               controller: contrrolSing.PhoneController,
               title: "الهاتف",
@@ -84,7 +84,7 @@ class _itemInformationState extends State<itemInformation1>
           const SizedBox(
             height: 20,
           ),
-          Flexible(
+          Expanded(
             child: DafulteTextForm(
               controller: contrrolSing.partController,
               title: "الاختصاص",
@@ -100,7 +100,7 @@ class _itemInformationState extends State<itemInformation1>
           const SizedBox(
             height: 20,
           ),
-          Flexible(
+          Expanded(
             child: DafulteTextForm(
               readonly: true,
               onTap: () {

@@ -43,55 +43,55 @@ class _SingViewState extends State<SingView>
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        child: IntrinsicHeight(
-          child: Stack(
-            children: [
-              GetBuilder<SingContrrol>(
-                builder: (controller) {
-                  if (contrrolSing.Loding == true) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
+        child: Stack(
+          children: [
+            GetBuilder<SingContrrol>(
+              builder: (controller) {
+                if (contrrolSing.Loding == true) {
+                  return const Center(child: CircularProgressIndicator());
+                }
 
-                  return const SizedBox.shrink();
-                },
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(
-                    height: 40,
+                return const SizedBox.shrink();
+              },
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                const SizedBox(
+                  height: 40,
+                ),
+                const AppBarSing(),
+                const HelloText(),
+                const SizedBox(
+                  height: 40,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: Form(
+                    //key: cubit.keyform,
+                    child: CustaminformaionAccount(
+                        config: config, singContrrol: contrrolSing),
                   ),
-                  const AppBarSing(),
-                  const HelloText(),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Form(
-                      //key: cubit.keyform,
-                      child: CustaminformaionAccount(
-                          config: config, singContrrol: contrrolSing),
-                    ),
-                  ),
-                  GetBuilder<SingContrrol>(builder: (con) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Visibility(
-                          visible: contrrolSing.index != 0 ? false : true,
-                          child: IconButton(
-                              alignment: AlignmentDirectional.topStart,
-                              onPressed: () {
-                                con.ControolAnimatedAlign(
-                                    controller, riveControll, context);
-                              },
-                              icon: const Icon(Icons.arrow_right)),
-                        ),
-                        Visibility(
-                          visible: con.index == 0 ? false : true,
-                          //replacement: const Text('lll'),
+                ),
+                GetBuilder<SingContrrol>(builder: (con) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Visibility(
+                        visible: con.index == 0 ? false : true,
+                        child: IconButton(
+                            alignment: AlignmentDirectional.topStart,
+                            onPressed: () {
+                              con.ControolAnimatedAlign(
+                                  controller, riveControll, context);
+                            },
+                            icon: const Icon(Icons.arrow_right)),
+                      ),
+                      Visibility(
+                        visible: con.index != 0 ? false : true,
+                        //replacement: const Text('lll'),
+                        child: Center(
                           child: Boutton(
                             hieght: 50,
                             wdith: 150,
@@ -104,16 +104,16 @@ class _SingViewState extends State<SingView>
                             },
                           ),
                         ),
-                      ],
-                    );
-                  }),
-                  const SizedBox(
-                    height: 40,
-                  )
-                ],
-              ),
-            ],
-          ),
+                      ),
+                    ],
+                  );
+                }),
+                const SizedBox(
+                  height: 40,
+                )
+              ],
+            ),
+          ],
         ),
       ),
     );

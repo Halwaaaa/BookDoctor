@@ -81,10 +81,15 @@ class _itemInformationState extends State<itemInformation2>
           const SizedBox(
             height: 20,
           ),
+          const Expanded(
+              child: SizedBox(
+            height: 20,
+          )),
 
           const SizedBox(
             height: 20,
           ),
+          const Expanded(child: SizedBox.shrink()),
         ],
       ),
     );

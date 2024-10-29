@@ -44,6 +44,7 @@ class SingContrrol extends GetxController {
   late SharedPrefrance sharedPrefrance;
   var keyForm1 = GlobalKey<FormState>();
   var keyForm2 = GlobalKey<FormState>();
+  late int initPages;
 
   late int index;
 
@@ -100,6 +101,9 @@ class SingContrrol extends GetxController {
     icon = Icons.arrow_right;
     Loding = false;
     sharedPrefrance = Get.find();
+    sharedPrefrance.sharedPreferences?.getString('UID') == null
+        ? initPages = 0
+        : initPages = 1;
 
     FileController = TextEditingController();
     PhoneController = TextEditingController();
