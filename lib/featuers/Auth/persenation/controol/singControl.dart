@@ -20,6 +20,7 @@ import 'package:bookdoctor/featuers/Auth/domin/Repos/SingRepo.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/AskToSingFeaTuredUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/SendFeaTuredLoginUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
+import 'package:bookdoctor/featuers/Auth/persenation/widget/awssomeDaiog.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -41,7 +42,7 @@ class SingContrrol extends GetxController {
   late TextEditingController NameController;
   late TextEditingController PhoneController;
   late SharedPrefrance sharedPrefrance;
-  late AwesomeDialog awesomeDialog;
+
   var keyForm1 = GlobalKey<FormState>();
   var keyForm2 = GlobalKey<FormState>();
   late int initPages;
@@ -156,9 +157,13 @@ class SingContrrol extends GetxController {
       BuildContext context, RiveControll riveControll) async {
     print("jjj");
     if (keyForm1.currentState!.validate()) {
+      riveControll.timer?.cancel();
+      riveControll.login_fail!.value = false;
+      lodingTrue();
       //  if (await HaveAccout(context, riveControll) == true) {
       print("kkkkkkkkkkkkkkkkkkkkkkkkkkk");
-      _AskToSing(context, sharedPrefrance.sharedPreferences?.getString('UID'));
+      _AskToSing(context, sharedPrefrance.sharedPreferences?.getString('UID'),
+          riveControll);
       // }
     }
     //  }
@@ -183,18 +188,24 @@ class SingContrrol extends GetxController {
     });
   }
 
-  void _AskToSing(BuildContext context, String? uidDoctor) {
+  Future<void> _AskToSing(BuildContext context, String? uidDoctor,
+      RiveControll riveControllr) async {
+    lodingTrue();
     ModlesAskToSing modlesAskToSing = ModlesAskToSing(
         email: emailControol.text,
         name: NameController.text,
         part: partController.text,
         phone: PhoneController.text,
         Uid: uidDoctor);
-    asktosing.call(modlesAskToSing).then((value) {
+    await asktosing.call(modlesAskToSing).then((value) {
+      log('lll');
       lodingFalse();
       value.bimap(
-        (faluires g) =>
-            {print("gggggggggggggggggggggggggggggg"), print(g.masseges)},
+        (faluires g) => {
+          print("gggggggggggggggggggggggggggggg"),
+          riveControllr.FailedStatues(),
+          DafultAwssomeDialog(context, massges: g.masseges).show(),
+        },
         (r) {
           print(r.id);
           _SenedCVToFirebase(context, uidDoctor!);
@@ -207,15 +218,21 @@ class SingContrrol extends GetxController {
     BuildContext context,
     String uid,
   ) {
+    log("cv");
     singReposImplo.SenedFeaTuredCV(FileStorge!, uid, context).then((value) {
       value.bimap((faluires) {
         DafultAwssomeDialog(context, massges: faluires.masseges);
         print(faluires.masseges);
-      }, ((UploadTask uploadTask) {
-        uploadTask = uploadTask;
+      }, ((UploadTask uploadTask1) {
+        uploadTask = uploadTask1;
+        AwesomeDialog awesomeDialog = awesomeDialogview(context);
 
         awesomeDialog.show();
-        _cvSendListen(uploadTask, awesomeDialog, context);
+        _cvSendListen(
+          uploadTask,
+          awesomeDialog,
+          context,
+        );
       }));
     });
   }
@@ -227,25 +244,28 @@ class SingContrrol extends GetxController {
       update();
     });
 
-    uploadTask.snapshotEvents.listen((event) {
+    uploadTask.snapshotEvents.listen((event) async {
+      await Future.delayed(const Duration(milliseconds: 300));
+
       if (event.state == TaskState.running) {
         AnimatedBytesTransferred = event.bytesTransferred - bytesTransferred;
         bytesTransferred = event.bytesTransferred;
+
         update();
       } else if (event.state == TaskState.success) {
+        log("success");
         awesomeDialog.dismiss();
-        DafultAwssomeDialog(context, massges: event.state.name);
+        DafultAwssomeDialog(context, massges: event.state.name).show();
       } else if (event.state == TaskState.error) {
+        log("error");
         awesomeDialog.dismiss();
         DafultAwssomeDialog(context, massges: event.state.name);
       }
     });
   }
 
-  void cancelSenedCv() {
-    uploadTask.cancel().then((value) {
-      awesomeDialog.dismiss();
-    });
+  Future<void> cancelSenedCv() async {
+    await uploadTask.cancel();
   }
 
   Future<bool?> HaveAccout(

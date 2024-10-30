@@ -45,15 +45,6 @@ class _SingViewState extends State<SingView>
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            GetBuilder<SingContrrol>(
-              builder: (controller) {
-                if (contrrolSing.Loding == true) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-
-                return const SizedBox.shrink();
-              },
-            ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
@@ -112,6 +103,15 @@ class _SingViewState extends State<SingView>
                   height: 40,
                 )
               ],
+            ),
+            GetBuilder<SingContrrol>(
+              builder: (controller) {
+                if (contrrolSing.Loding == true) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                return const SizedBox.shrink();
+              },
             ),
           ],
         ),

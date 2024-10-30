@@ -9,9 +9,15 @@ import 'package:get/get.dart';
 AwesomeDialog awesomeDialogview(
   BuildContext context,
 ) {
+  SingContrrol singContrrol = Get.find();
   return AwesomeDialog(
       context: context,
-      btnOkOnPress: () {},
+      btnOkOnPress: () async {
+        await singContrrol.cancelSenedCv().then((value) {
+          Get.back();
+        });
+      },
+      btnOkText: "الغاء العملية ",
       body: GetBuilder<SingContrrol>(builder: (contrrol) {
         return bobyAwesomeDailog(
           contrrol: contrrol,

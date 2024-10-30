@@ -3,6 +3,7 @@ import 'package:bookdoctor/core/errors/faliure.dart';
 import 'package:bookdoctor/core/servers/initernet.dart';
 import 'package:bookdoctor/core/utles/useCase.dart';
 import 'package:bookdoctor/featuers/Auth/Data/Modles/ModlesAskToSing.dart';
+import 'package:bookdoctor/featuers/Auth/Data/Repoes/SingRepo.dart';
 import 'package:bookdoctor/featuers/Auth/domin/Entitty/AsktoEntity.dart';
 import 'package:bookdoctor/featuers/Auth/domin/Entitty/checkIfEmailEntity.dart';
 import 'package:bookdoctor/featuers/Auth/domin/Repos/SingRepo.dart';
@@ -12,7 +13,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class AskToSingFeaTuredUseCase
     extends UseCase<DocumentReference, ModlesAskToSing> {
-  final SingRepo singRepo;
+  final SingReposImplo singRepo;
 
   AskToSingFeaTuredUseCase({
     required this.singRepo,

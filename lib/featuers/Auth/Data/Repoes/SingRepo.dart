@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:bookdoctor/core/errors/faliure.dart';
@@ -22,13 +23,16 @@ class SingReposImplo extends SingRepo {
   Future<Either<faluires, DocumentReference>> SendFeaTuredAskToSing(
       ModlesAskToSing askToSing) async {
     try {
+      log('cccc');
       DocumentReference Resut =
-          await singRemoteDataSousrce.SendFeaTuredAskToSing(askToSing);
+          await singRemoteDataSousrce.SendFeaTuredAskToSing(askToSing).timeout(
+        const Duration(seconds: 10),
+      );
 
       return right(Resut);
     } catch (e) {
-      if (e is FirebaseAuthException) {
-        return left(faluiresfiebasesing.fromFierbaseAuthEroor(e));
+      if (e is FirebaseException) {
+        return left(faluiresfiebase.erorr(e));
       }
       return left(unknowfaluires(masseges: e.toString()));
     }

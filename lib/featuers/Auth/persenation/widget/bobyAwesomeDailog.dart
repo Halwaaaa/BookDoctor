@@ -18,6 +18,25 @@ class bobyAwesomeDailog extends StatelessWidget {
         children: [
           Config().smallSpace(),
           Config().smallSpace(),
+          Stack(
+            children: [
+              // خط يمثل الحجم الكلي للملف
+              Container(
+                width: 300, // الطول الكلي للخط
+                height: 10, // ارتفاع الخط
+                color: Colors.grey[300], // لون الخلفية
+              ),
+              // خط يمثل الحجم المرفوع
+              Container(
+                width: 300 *
+                    contrrol.bytesTransferred.toDouble() /
+                    contrrol.totalLenghtFile
+                        .toDouble(), // الطول يعتمد على نسبة الرفع
+                height: 10,
+                color: Colors.green, // لون الجزء المرفوع
+              ),
+            ],
+          ),
           TweenAnimationBuilder(
             duration: const Duration(milliseconds: 300),
             tween: IntTween(
