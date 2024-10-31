@@ -1,9 +1,12 @@
+import 'package:bookdoctor/core/utles/Eumes.dart';
+
 class ModlesAskToSing {
   String? name;
   String? email;
   String? phone;
   String? part;
   String? Uid;
+  String Sataus = 'REQ';
   ModlesAskToSing({
     required this.name,
     required this.email,
@@ -17,6 +20,7 @@ class ModlesAskToSing {
     email = json['email'];
     part = json['part'];
     phone = json['phone'];
+    Sataus = json['Sataus'];
   }
   Map<String, dynamic> ToMap() {
     return {
@@ -25,6 +29,7 @@ class ModlesAskToSing {
       'part': part,
       'phone': phone,
       'Uid': Uid,
+      'Sataus': Sataus
     };
   }
 }
