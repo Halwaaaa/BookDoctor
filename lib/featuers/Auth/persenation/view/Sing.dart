@@ -45,6 +45,7 @@ class _SingViewState extends State<SingView>
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Stack(
+          alignment: AlignmentDirectional.topStart,
           children: [
             IntrinsicHeight(
               child: Column(
@@ -108,20 +109,21 @@ class _SingViewState extends State<SingView>
                 ],
               ),
             ),
-            GetBuilder<SingContrrol>(
-              builder: (controller) {
-                if (contrrolSing.Loding == true) {
-                  return Container(
-                      color: Colors.white.withOpacity(0.4),
+            Positioned(
+              bottom: 0,
+              child: GetBuilder<SingContrrol>(
+                builder: (controller) {
+                  if (contrrolSing.Loding == true) {
+                    return Container(
                       height: MediaQuery.sizeOf(context).height,
-                      child: const Center(
-                          child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                      )));
-                }
+                      width: MediaQuery.sizeOf(context).height,
+                      color: Colors.white.withOpacity(0.4),
+                    );
+                  }
 
-                return const SizedBox.shrink();
-              },
+                  return const SizedBox.shrink();
+                },
+              ),
             ),
           ],
         ),

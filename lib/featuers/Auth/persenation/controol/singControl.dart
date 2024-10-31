@@ -245,7 +245,7 @@ class SingContrrol extends GetxController {
       } else if (event.state == TaskState.success) {
         log("success");
         awesomeDialog.dismiss();
-        DafultAwssomeDialog(context, massges: event.state.name).show();
+        Get.offAllNamed(Routers.RAwaitForPermassionToSing);
       } else if (event.state == TaskState.error) {
         log("error");
         awesomeDialog.dismiss();

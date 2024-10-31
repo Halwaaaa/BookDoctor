@@ -5,6 +5,6 @@ class AwaitForPermassionToSingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column();
+    return const Scaffold();
   }
 }
