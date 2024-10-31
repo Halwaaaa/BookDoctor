@@ -18,15 +18,19 @@ class get_it {
       getIt.registerLazySingleton<SingRemoteDataSousrceImp>(
           () => SingRemoteDataSousrceImp());
     }
-    getIt.registerLazySingleton<checkIfEmailRegisteredWithGoogle>(() =>
-        checkIfEmailRegisteredWithGoogle(singRepo: getIt<SingReposImplo>()));
-
+    if (!getIt.isRegistered<checkIfEmailRegisteredWithGoogle>()) {
+      getIt.registerLazySingleton<checkIfEmailRegisteredWithGoogle>(() =>
+          checkIfEmailRegisteredWithGoogle(singRepo: getIt<SingReposImplo>()));
+    }
     // تسجيل SingReposImplo كمستودع
-    getIt.registerLazySingleton<SingReposImplo>(() => SingReposImplo(
-        singRemoteDataSousrce: getIt<SingRemoteDataSousrceImp>()));
-
-    // تسجيل AskToSingFeaTuredUseCase كحالة استخدام
-    getIt.registerLazySingleton<AskToSingFeaTuredUseCase>(
-        () => AskToSingFeaTuredUseCase(singRepo: getIt<SingReposImplo>()));
+    if (!getIt.isRegistered<SingReposImplo>()) {
+      getIt.registerLazySingleton<SingReposImplo>(() => SingReposImplo(
+          singRemoteDataSousrce: getIt<SingRemoteDataSousrceImp>()));
+    }
+    if (!getIt.isRegistered<AskToSingFeaTuredUseCase>()) {
+      // تسجيل AskToSingFeaTuredUseCase كحالة استخدام
+      getIt.registerLazySingleton<AskToSingFeaTuredUseCase>(
+          () => AskToSingFeaTuredUseCase(singRepo: getIt<SingReposImplo>()));
+    }
   }
 }
