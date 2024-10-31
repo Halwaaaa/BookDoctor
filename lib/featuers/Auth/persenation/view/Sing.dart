@@ -6,6 +6,7 @@ import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart'
 import 'package:bookdoctor/featuers/Auth/persenation/controol/singControl.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/AppBarSing.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/HelloText.dart';
+import 'package:bookdoctor/featuers/Auth/persenation/widget/TextDivider.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/customInformationSing.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -45,59 +46,78 @@ class _SingViewState extends State<SingView>
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const SizedBox(
-                  height: 40,
-                ),
-                const AppBarSing(),
-                const HelloText(),
-                const SizedBox(
-                  height: 40,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Form(
-                    //key: cubit.keyform,
-                    child: CustaminformaionAccount(
-                        config: config, singContrrol: contrrolSing),
+            IntrinsicHeight(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(
+                    height: 20,
                   ),
-                ),
-                GetBuilder<SingContrrol>(builder: (con) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Visibility(
-                        visible: con.index == 0 ? false : true,
-                        //replacement: const Text('lll'),
-                        child: Center(
-                          child: Boutton(
-                            hieght: 50,
-                            wdith: 150,
-                            isLoding: con.Loding,
-                            titil: "سجل",
-                            ontap: () {
-                              contrrolSing.SenedAskToSing(
-                                  context, riveControll);
-                              // cubit.TapSin(context);
-                            },
-                          ),
+                  const AppBarSing(),
+                  const HelloText(),
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Form(
+                      //key: cubit.keyform,
+                      child: CustaminformaionAccount(
+                          config: config, singContrrol: contrrolSing),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Flexible(
+                    child: Center(
+                      child: TextAuth(
+                          isdark: false,
+                          TextFirst: 'هل لديك حساب بالفعل؟ ',
+                          TextSecand: 'سجل دخول'),
+                    ),
+                  ),
+                  const Flexible(
+                    child: SizedBox(
+                      height: 20,
+                    ),
+                  ),
+                  GetBuilder<SingContrrol>(builder: (con) {
+                    return Visibility(
+                      visible: con.index == 0 ? false : true,
+                      //replacement: const Text('lll'),
+                      child: Center(
+                        child: Boutton(
+                          hieght: 50,
+                          wdith: 150,
+                          isLoding: con.Loding,
+                          titil: "سجل",
+                          ontap: () {
+                            contrrolSing.SenedAskToSing(context, riveControll);
+                            // cubit.TapSin(context);
+                          },
                         ),
                       ),
-                    ],
-                  );
-                }),
-                const SizedBox(
-                  height: 40,
-                )
-              ],
+                    );
+                  }),
+                  const Expanded(
+                    child: SizedBox(
+                      height: 20,
+                    ),
+                  ),
+                ],
+              ),
             ),
             GetBuilder<SingContrrol>(
               builder: (controller) {
                 if (contrrolSing.Loding == true) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Container(
+                      color: Colors.white.withOpacity(0.4),
+                      height: MediaQuery.sizeOf(context).height,
+                      child: const Center(
+                          child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                      )));
                 }
 
                 return const SizedBox.shrink();

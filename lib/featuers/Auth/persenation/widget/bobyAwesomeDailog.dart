@@ -13,8 +13,8 @@ class bobyAwesomeDailog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int beginAnmitedText = contrrol.bytesTransferred;
-    final int endAnmitedText = contrrol.bytesTransferred;
+    final double beginAnmitedText = contrrol.bytesTransferred;
+    final double endAnmitedText = contrrol.bytesTransferred;
     final double beginAnimtedColoe =
         100 * contrrol.bytesTransferred.toDouble() / contrrol.totalLenghtFile;
     final double endAnimtedColoe = 100 * contrrol.bytesTransferred.toDouble() +
@@ -38,7 +38,6 @@ class bobyAwesomeDailog extends StatelessWidget {
                 width: 300 *
                     contrrol.bytesTransferred.toDouble() /
                     contrrol.totalLenghtFile
-                        .toDouble()
                         .toDouble(), // الطول يعتمد على نسبة الرفع
                 height: 10,
                 color: Colors.green, // لون الجزء المرفوع
@@ -46,13 +45,14 @@ class bobyAwesomeDailog extends StatelessWidget {
             ]),
             TweenAnimationBuilder(
               duration: const Duration(milliseconds: 300),
-              tween: IntTween(begin: beginAnmitedText, end: endAnmitedText),
+              tween:
+                  Tween<double>(begin: beginAnmitedText, end: endAnmitedText),
               builder: (context, value, child) {
                 return Row(
                   children: [
-                    Text(value.toString()),
+                    Text(contrrol.totalLenghtFile.toStringAsFixed(2)),
                     const Spacer(),
-                    Text(contrrol.totalLenghtFile.toString())
+                    Text(value.toStringAsFixed(2)),
                   ],
                 );
               },

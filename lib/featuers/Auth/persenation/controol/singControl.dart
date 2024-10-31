@@ -35,6 +35,7 @@ import 'package:get_it/get_it.dart';
 
 class SingContrrol extends GetxController {
   late TextEditingController passWordControol;
+  late TextEditingController REpassWordControol;
   late TextEditingController emailControol;
   late TextEditingController FileController;
   late TextEditingController partController;
@@ -78,6 +79,7 @@ class SingContrrol extends GetxController {
     cvController.dispose();
     PhoneController.dispose();
     partController.dispose();
+    REpassWordControol.dispose();
     FileController.dispose();
     NameController.dispose();
     carouselController.reactive.dispose();
@@ -111,7 +113,7 @@ class SingContrrol extends GetxController {
 
     totalLenghtFile = 1;
     bytesTransferred = 1;
-
+    REpassWordControol = TextEditingController();
     FileController = TextEditingController();
     PhoneController = TextEditingController();
     partController = TextEditingController();
@@ -132,19 +134,13 @@ class SingContrrol extends GetxController {
   void ControolAnimatedAlign(RiveControll riveControll, BuildContext context) {
     if (index == 0) {
       if (keyForm2.currentState!.validate()) {
-        riveControll.timer?.cancel();
-        riveControll.login_fail!.value = false;
+        riveControll.CancelFaild();
+        riveControll.eye_track?.change(10);
         lodingTrue();
-        singWithFirbse(context);
+        singWithFirbse(context, riveControll);
       } else {
         riveControll.FailedStatues();
       }
-    } else {
-      carouselController
-          .previousPage(duration: const Duration(milliseconds: 500))
-          .then((value) {
-        icon = Icons.arrow_right;
-      });
     }
   }
 
@@ -152,33 +148,32 @@ class SingContrrol extends GetxController {
       BuildContext context, RiveControll riveControll) async {
     print("jjj");
     if (keyForm1.currentState!.validate()) {
-      riveControll.timer?.cancel();
-      riveControll.login_fail!.value = false;
+      riveControll.CancelFaild();
       lodingTrue();
-      //  if (await HaveAccout(context, riveControll) == true) {
-      print("kkkkkkkkkkkkkkkkkkkkkkkkkkk");
+
       _AskToSing(context, sharedPrefrance.sharedPreferences?.getString('UID'),
           riveControll);
-      // }
     }
-    //  }
   }
 
-  Future<void> singWithFirbse(BuildContext context) async {
+  Future<void> singWithFirbse(
+      BuildContext context, RiveControll riveControll) async {
     ifEmailRegistered = EntitycheckIfEmailRegistered(
         Email: emailControol.text, passWord: passWordControol.text);
     Either<faluires, UserCredential> result =
         await singReposImplo.SingWithFirebase(ifEmailRegistered);
     lodingFalse();
     result.bimap((faluires f) {
+      riveControll.FailedStatues();
+
       DafultAwssomeDialog(context, massges: f.masseges).show();
     }, (UserCredential userCredential) {
+      riveControll.CancelFaild();
       sharedPrefrance.sharedPreferences
-          ?.setString('UID', userCredential.user!.uid);
-      carouselController
-          .nextPage(duration: const Duration(milliseconds: 500))
+          ?.setString('UID', userCredential.user!.uid)
           .then((value) {
-        icon = Icons.arrow_left;
+        carouselController.nextPage(
+            duration: const Duration(milliseconds: 500));
       });
     });
   }
@@ -193,16 +188,13 @@ class SingContrrol extends GetxController {
         phone: PhoneController.text,
         Uid: uidDoctor);
     await asktosing.call(modlesAskToSing).then((value) {
-      log('lll');
       lodingFalse();
       value.bimap(
         (faluires g) => {
-          print("gggggggggggggggggggggggggggggg"),
           riveControllr.FailedStatues(),
           DafultAwssomeDialog(context, massges: g.masseges).show(),
         },
         (r) {
-          print(r.id);
           _SenedCVToFirebase(context, uidDoctor!);
         },
       );
@@ -213,7 +205,6 @@ class SingContrrol extends GetxController {
     BuildContext context,
     String uid,
   ) {
-    log("cv");
     singReposImplo.SenedFeaTuredCV(FileStorge!, uid, context).then((value) {
       value.bimap((faluires) {
         DafultAwssomeDialog(context, massges: faluires.masseges);

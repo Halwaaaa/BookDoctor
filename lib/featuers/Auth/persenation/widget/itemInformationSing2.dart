@@ -41,13 +41,6 @@ class _itemInformationState extends State<itemInformation2>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // DafulteTextForm(
-          //     //controller: cubit.EmailControol,
-          //     title: "البريد الكتروني",
-          //     validator: config.validator),
-          // const SizedBox(
-          //   height: 20,
-          // ),
           DafulteTextForm(
             controller: contrrolSing.emailControol,
             OnFouc: () {
@@ -57,37 +50,71 @@ class _itemInformationState extends State<itemInformation2>
               riveControll.isFocus!.value = false;
             },
             title: "البريد الكتروني",
+            validator: (password) {
+              if (password!.isEmpty) {
+                return "الحقل مطلوب";
+              }
+              if (!password.isEmail) {
+                return "الحقل المطلوب ايميل";
+              }
+              return null;
+            },
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          DafulteTextForm(
+            controller: contrrolSing.passWordControol,
+            title: "كلمة السر",
+            onTap: () {},
+            OnFouc: () {
+              riveControll.IsPassword?.value = true;
+            },
+            NotFouc: () {
+              riveControll.IsPassword?.change(false);
+            },
             validator: widget.config.validator,
           ),
           const SizedBox(
             height: 20,
           ),
-          Flexible(
-            child: DafulteTextForm(
-              controller: contrrolSing.passWordControol,
-              title: "كلمة السر",
-              onTap: () {},
-              OnFouc: () {
-                riveControll.IsPassword?.value = true;
-              },
-              NotFouc: () {
-                riveControll.IsPassword?.change(false);
-              },
-              validator: widget.config.validator,
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Expanded(
-              child: SizedBox(
-            height: 20,
-          )),
+          DafulteTextForm(
+            controller: contrrolSing.REpassWordControol,
+            title: "اعادة كلمة السر ",
+            onTap: () {},
+            OnFouc: () {
+              riveControll.IsPassword?.value = true;
+            },
+            NotFouc: () {
+              riveControll.IsPassword?.change(false);
+            },
+            validator: (ERpassword) {
+              if (ERpassword!.isEmpty) {
+                return "الحقل مطلوب";
+              }
 
+              if (ERpassword.toString() != contrrolSing.passWordControol.text) {
+                return 'يجب تتطابق كلمة السر ';
+              }
+              return null;
+            },
+          ),
           const SizedBox(
             height: 20,
           ),
-          const Expanded(child: SizedBox.shrink()),
+          GetBuilder<SingContrrol>(
+            builder: (controller) {
+              return Visibility(
+                visible: controller.index != 0 ? false : true,
+                child: IconButton(
+                    alignment: AlignmentDirectional.topStart,
+                    onPressed: () {
+                      controller.ControolAnimatedAlign(riveControll, context);
+                    },
+                    icon: const Icon(Icons.arrow_right)),
+              );
+            },
+          )
         ],
       ),
     );

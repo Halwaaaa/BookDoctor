@@ -50,6 +50,11 @@ class RiveControll extends GetxController {
     });
   }
 
+  void CancelFaild() {
+    timer?.cancel();
+    login_fail!.value = false;
+  }
+
   void initSMI() {
     IsPassword = controllerDrawer?.findSMI("IsPassword") as SMIBool?;
     login_SUCCESS = controllerDrawer?.findSMI("login_success") as SMITrigger?;

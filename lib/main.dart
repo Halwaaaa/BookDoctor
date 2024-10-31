@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     get_it().setup();
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       locale: const Locale('ar'),
       getPages: Routers.getpage,
       //routerConfig: Routers.router,

@@ -32,8 +32,14 @@ class faluiresHaveAccount extends faluires {
   faluiresHaveAccount({required super.masseges});
 }
 
+
 class faluiresfiebase extends faluires {
   faluiresfiebase({required super.masseges});
-  factory faluiresfiebase.erorr(FirebaseException exception) =>
-      faluiresfiebase(masseges: exception.message.toString());
+  factory faluiresfiebase.erorr(FirebaseException exception) {
+    if (exception.message?.contains('403') == true) {
+      return faluiresfiebase(masseges: 'الوقع غير فغال فى منطقتك');
+    }
+
+    return faluiresfiebase(masseges: exception.message.toString());
+  }
 }
