@@ -20,7 +20,7 @@ import 'package:bookdoctor/featuers/Auth/domin/Repos/SingRepo.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/AskToSingFeaTuredUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/SendFeaTuredLoginUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
-import 'package:bookdoctor/featuers/Auth/persenation/widget/awssomeDaiog.dart';
+import 'package:bookdoctor/featuers/Auth/persenation/widget/DailogSendCV.dart';
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -170,10 +170,14 @@ class SingContrrol extends GetxController {
     }, (UserCredential userCredential) {
       riveControll.CancelFaild();
       sharedPrefrance.sharedPreferences
-          ?.setString('UID', userCredential.user!.uid)
+          ?.setString('EMAIL', emailControol.text)
           .then((value) {
-        carouselController.nextPage(
-            duration: const Duration(milliseconds: 500));
+        sharedPrefrance.sharedPreferences
+            ?.setString('UID', userCredential.user!.uid)
+            .then((value) {
+          carouselController.nextPage(
+              duration: const Duration(milliseconds: 500));
+        });
       });
     });
   }
@@ -182,11 +186,11 @@ class SingContrrol extends GetxController {
       RiveControll riveControllr) async {
     lodingTrue();
     ModlesAskToSing modlesAskToSing = ModlesAskToSing(
-        email: emailControol.text,
+        email: sharedPrefrance.sharedPreferences?.getString("EMAIL"),
         name: NameController.text,
         part: partController.text,
         phone: PhoneController.text,
-        Uid: uidDoctor);
+        Uid: sharedPrefrance.sharedPreferences?.getString('UID'));
     await asktosing.call(modlesAskToSing).then((value) {
       lodingFalse();
       value.bimap(
