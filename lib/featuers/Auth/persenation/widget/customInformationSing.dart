@@ -1,5 +1,6 @@
 import 'package:bookdoctor/core/constant/config.dart';
 import 'package:bookdoctor/core/servers/SharedPrefrance.dart';
+import 'package:bookdoctor/core/utles/methed.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/singControl.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/itemInformationSing.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/itemInformationSing2.dart';
@@ -36,7 +37,8 @@ class CustaminformaionAccount extends StatelessWidget {
           scrollPhysics: const NeverScrollableScrollPhysics(),
           // aspectRatio: 1,
           viewportFraction: 1,
-          height: MediaQuery.sizeOf(context).height * 0.4),
+          height: ResponsvTextSizemin(
+              MediaQuery.sizeOf(context).height * 0.4, 350)),
     );
   }
 }

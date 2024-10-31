@@ -111,8 +111,8 @@ class SingContrrol extends GetxController {
         ? initPages = 0
         : initPages = 1;
 
-    totalLenghtFile = 0;
-    bytesTransferred = 0;
+    totalLenghtFile = 1;
+    bytesTransferred = 1;
 
     FileController = TextEditingController();
     PhoneController = TextEditingController();
@@ -124,7 +124,6 @@ class SingContrrol extends GetxController {
     emailControol = TextEditingController();
     cvController = TextEditingController();
     get = get_it();
-    get.dispose();
 
     singReposImplo = get.getIt<SingReposImplo>();
     asktosing = get_it().getIt<AskToSingFeaTuredUseCase>();

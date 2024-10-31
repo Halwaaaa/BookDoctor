@@ -48,18 +48,16 @@ class _itemInformationState extends State<itemInformation2>
           // const SizedBox(
           //   height: 20,
           // ),
-          Flexible(
-            child: DafulteTextForm(
-              controller: contrrolSing.emailControol,
-              OnFouc: () {
-                riveControll.isFocus!.value = true;
-              },
-              NotFouc: () {
-                riveControll.isFocus!.value = false;
-              },
-              title: "البريد الكتروني",
-              validator: widget.config.validator,
-            ),
+          DafulteTextForm(
+            controller: contrrolSing.emailControol,
+            OnFouc: () {
+              riveControll.isFocus!.value = true;
+            },
+            NotFouc: () {
+              riveControll.isFocus!.value = false;
+            },
+            title: "البريد الكتروني",
+            validator: widget.config.validator,
           ),
           const SizedBox(
             height: 20,
