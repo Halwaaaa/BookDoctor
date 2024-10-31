@@ -79,7 +79,7 @@ class _DafulteTextFormState extends State<DafulteTextForm>
       child: AnimatedBuilder(
         animation: controller,
         builder: (context, child) => SizedBox(
-          height: 100,
+          height: 70,
           child: TextFormField(
             focusNode: focusNode,
 
