@@ -45,12 +45,11 @@ class SingContrrol extends GetxController {
 
   var keyForm1 = GlobalKey<FormState>();
   var keyForm2 = GlobalKey<FormState>();
-  late int initPages;
 
   late int index;
-  late int bytesTransferred;
-  late int totalLenghtFile;
-  late int AnimatedBytesTransferred;
+  late double bytesTransferred;
+  late double totalLenghtFile;
+  late double AnimatedBytesTransferred;
 
   // ignore: prefer_typing_uninitialized_variables
   late checkIfEmailRegisteredWithGoogle checkEmail;
@@ -102,14 +101,13 @@ class SingContrrol extends GetxController {
   }
 
   void initStauts() {
-    index = 0;
     icon = Icons.arrow_right;
     AnimatedBytesTransferred = 0;
     Loding = false;
     sharedPrefrance = Get.find();
     sharedPrefrance.sharedPreferences?.getString('UID') == null
-        ? initPages = 0
-        : initPages = 1;
+        ? index = 0
+        : index = 1;
 
     totalLenghtFile = 1;
     bytesTransferred = 1;
@@ -131,8 +129,7 @@ class SingContrrol extends GetxController {
     checkEmail = get.getIt<checkIfEmailRegisteredWithGoogle>();
   }
 
-  void ControolAnimatedAlign(AnimationController controller,
-      RiveControll riveControll, BuildContext context) {
+  void ControolAnimatedAlign(RiveControll riveControll, BuildContext context) {
     if (index == 0) {
       if (keyForm2.currentState!.validate()) {
         riveControll.timer?.cancel();
@@ -143,7 +140,6 @@ class SingContrrol extends GetxController {
         riveControll.FailedStatues();
       }
     } else {
-      controller.reverse();
       carouselController
           .previousPage(duration: const Duration(milliseconds: 500))
           .then((value) {
@@ -239,7 +235,7 @@ class SingContrrol extends GetxController {
   void _cvSendListen(UploadTask uploadTask, AwesomeDialog awesomeDialog,
       BuildContext context) {
     uploadTask.snapshotEvents.first.then((value) {
-      totalLenghtFile = value.totalBytes;
+      totalLenghtFile = value.totalBytes / 1024;
       update();
     });
 
@@ -248,7 +244,7 @@ class SingContrrol extends GetxController {
 
       if (event.state == TaskState.running) {
         AnimatedBytesTransferred = event.bytesTransferred - bytesTransferred;
-        bytesTransferred = event.bytesTransferred;
+        bytesTransferred = event.bytesTransferred / 1024;
 
         update();
       } else if (event.state == TaskState.success) {

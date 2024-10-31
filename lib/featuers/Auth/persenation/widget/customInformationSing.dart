@@ -33,7 +33,7 @@ class CustaminformaionAccount extends StatelessWidget {
           },
           scrollDirection: Axis.horizontal,
           autoPlay: false,
-          initialPage: singContrrol.initPages,
+          initialPage: singContrrol.index,
           scrollPhysics: const NeverScrollableScrollPhysics(),
           // aspectRatio: 1,
           viewportFraction: 1,

@@ -71,16 +71,6 @@ class _SingViewState extends State<SingView>
                     children: [
                       Visibility(
                         visible: con.index == 0 ? false : true,
-                        child: IconButton(
-                            alignment: AlignmentDirectional.topStart,
-                            onPressed: () {
-                              con.ControolAnimatedAlign(
-                                  controller, riveControll, context);
-                            },
-                            icon: const Icon(Icons.arrow_right)),
-                      ),
-                      Visibility(
-                        visible: con.index != 0 ? false : true,
                         //replacement: const Text('lll'),
                         child: Center(
                           child: Boutton(
