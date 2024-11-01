@@ -6,6 +6,7 @@ import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart'
 import 'package:bookdoctor/featuers/Auth/persenation/controol/singControl.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/AppBarSing.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/HelloText.dart';
+import 'package:bookdoctor/featuers/Auth/persenation/widget/LodingWidget.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/TextDivider.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/widget/customInformationSing.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -114,11 +115,7 @@ class _SingViewState extends State<SingView>
               child: GetBuilder<SingContrrol>(
                 builder: (controller) {
                   if (contrrolSing.Loding == true) {
-                    return Container(
-                      height: MediaQuery.sizeOf(context).height,
-                      width: MediaQuery.sizeOf(context).height,
-                      color: Colors.white.withOpacity(0.4),
-                    );
+                    return const LodingWidget();
                   }
 
                   return const SizedBox.shrink();
