@@ -11,6 +11,7 @@ AwesomeDialog awesomeDialogview(
 ) {
   SingContrrol singContrrol = Get.find();
   return AwesomeDialog(
+      dismissOnBackKeyPress: false,
       context: context,
       btnOkOnPress: () async {
         await singContrrol.cancelSenedCv().then((value) {

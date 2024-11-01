@@ -42,7 +42,7 @@ class SingContrrol extends GetxController {
   late TextEditingController cvController;
   late TextEditingController NameController;
   late TextEditingController PhoneController;
-  late SharedPrefrance sharedPrefrance;
+  late SharedPrefranceSr sharedPrefrance;
 
   var keyForm1 = GlobalKey<FormState>();
   var keyForm2 = GlobalKey<FormState>();

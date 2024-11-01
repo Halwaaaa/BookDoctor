@@ -4,5 +4,5 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future initServer() async {
-  await Get.putAsync(() => SharedPrefrance().init(), permanent: true);
+  await Get.putAsync(() => SharedPrefranceSr().init(), permanent: true);
 }

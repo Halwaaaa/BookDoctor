@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPrefrance extends GetxService {
+class SharedPrefranceSr extends GetxService {
   SharedPreferences? sharedPreferences;
 
-  Future<SharedPrefrance> init() async {
+  Future<SharedPrefranceSr> init() async {
     await SharedPreferences.getInstance().then((value) {
       sharedPreferences = value;
       //sharedPreferences?.remove("UID");
