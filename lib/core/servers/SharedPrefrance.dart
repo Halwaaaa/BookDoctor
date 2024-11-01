@@ -7,7 +7,7 @@ class SharedPrefrance extends GetxService {
   Future<SharedPrefrance> init() async {
     await SharedPreferences.getInstance().then((value) {
       sharedPreferences = value;
-      sharedPreferences?.remove("UID");
+      //sharedPreferences?.remove("UID");
     });
     return this;
   }
