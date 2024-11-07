@@ -20,7 +20,11 @@ import 'package:bookdoctor/featuers/Auth/domin/Repos/SingRepo.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/AskToSingFeaTuredUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/domin/UseCase/SendFeaTuredLoginUseCase.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
+<<<<<<< HEAD
 import 'package:bookdoctor/featuers/Auth/persenation/widget/awssomeDaiog.dart';
+=======
+import 'package:bookdoctor/featuers/Auth/persenation/widget/DailogSendCV.dart';
+>>>>>>> Auth
 import 'package:carousel_slider/carousel_controller.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -42,7 +46,11 @@ class SingContrrol extends GetxController {
   late TextEditingController cvController;
   late TextEditingController NameController;
   late TextEditingController PhoneController;
+<<<<<<< HEAD
   late SharedPrefrance sharedPrefrance;
+=======
+  late SharedPrefranceSr sharedPrefrance;
+>>>>>>> Auth
 
   var keyForm1 = GlobalKey<FormState>();
   var keyForm2 = GlobalKey<FormState>();
@@ -169,11 +177,19 @@ class SingContrrol extends GetxController {
       DafultAwssomeDialog(context, massges: f.masseges).show();
     }, (UserCredential userCredential) {
       riveControll.CancelFaild();
+<<<<<<< HEAD
       sharedPrefrance.sharedPreferences
           ?.setString('UID', userCredential.user!.uid)
           .then((value) {
         carouselController.nextPage(
             duration: const Duration(milliseconds: 500));
+=======
+      sharedPrefrance.setEmail(emailControol.text).then((value) {
+        sharedPrefrance.setUid(userCredential.user!.uid).then((value) {
+          carouselController.nextPage(
+              duration: const Duration(milliseconds: 500));
+        });
+>>>>>>> Auth
       });
     });
   }
@@ -182,11 +198,21 @@ class SingContrrol extends GetxController {
       RiveControll riveControllr) async {
     lodingTrue();
     ModlesAskToSing modlesAskToSing = ModlesAskToSing(
+<<<<<<< HEAD
         email: emailControol.text,
         name: NameController.text,
         part: partController.text,
         phone: PhoneController.text,
         Uid: uidDoctor);
+=======
+        email: sharedPrefrance.sharedPreferences
+            ?.getString(SharedPrefranceSr.Semil),
+        name: NameController.text,
+        part: partController.text,
+        phone: PhoneController.text,
+        Uid: sharedPrefrance.sharedPreferences
+            ?.getString(SharedPrefranceSr.Suid));
+>>>>>>> Auth
     await asktosing.call(modlesAskToSing).then((value) {
       lodingFalse();
       value.bimap(
@@ -241,7 +267,12 @@ class SingContrrol extends GetxController {
       } else if (event.state == TaskState.success) {
         log("success");
         awesomeDialog.dismiss();
+<<<<<<< HEAD
         DafultAwssomeDialog(context, massges: event.state.name).show();
+=======
+        await sharedPrefrance.setSendAsk(true);
+        Get.offAllNamed(Routers.RAwaitForPermassionToSing);
+>>>>>>> Auth
       } else if (event.state == TaskState.error) {
         log("error");
         awesomeDialog.dismiss();

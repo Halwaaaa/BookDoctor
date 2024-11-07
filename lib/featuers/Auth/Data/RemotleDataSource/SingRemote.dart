@@ -1,3 +1,8 @@
+<<<<<<< HEAD
+=======
+import 'dart:developer';
+import 'dart:ffi';
+>>>>>>> Auth
 import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -15,7 +20,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 abstract class SingRemoteDataSousrce {
+<<<<<<< HEAD
   Future<DocumentReference> SendFeaTuredAskToSing(ModlesAskToSing askToSing);
+=======
+  Future<void> SendFeaTuredAskToSing(ModlesAskToSing askToSing);
+>>>>>>> Auth
 
   Future<bool> checkIfEmailRegisteredWithGoogle(
       EntitycheckIfEmailRegistered emailRegistered);
@@ -28,16 +37,28 @@ abstract class SingRemoteDataSousrce {
 
 class SingRemoteDataSousrceImp extends SingRemoteDataSousrce {
   @override
+<<<<<<< HEAD
   Future<DocumentReference> SendFeaTuredAskToSing(
       ModlesAskToSing askToSing) async {
     return await FirebaseFirestore.instance
         .collection("DoctorAskToSing")
         .add(askToSing.ToMap());
+=======
+  Future<void> SendFeaTuredAskToSing(ModlesAskToSing askToSing) async {
+    return await FirebaseFirestore.instance
+        .collection("DoctorAskToSing")
+        .doc(askToSing.Uid)
+        .set(askToSing.ToMap());
+>>>>>>> Auth
   }
 
   @override
   Future<bool> checkIfEmailRegisteredWithGoogle(
       EntitycheckIfEmailRegistered emailRegistered) async {
+<<<<<<< HEAD
+=======
+    log(emailRegistered.Email!);
+>>>>>>> Auth
     // TODO: implement checkIfEmailRegisteredWithGoogle
     List<String>? data = await FirebaseAuth.instance
         .fetchSignInMethodsForEmail(emailRegistered.Email!);
@@ -45,6 +66,10 @@ class SingRemoteDataSousrceImp extends SingRemoteDataSousrce {
     if (data.isNotEmpty) {
       return false;
     }
+<<<<<<< HEAD
+=======
+    log("${data}llll");
+>>>>>>> Auth
     return true;
   }
 

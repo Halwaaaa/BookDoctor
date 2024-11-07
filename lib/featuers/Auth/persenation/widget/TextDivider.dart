@@ -1,10 +1,16 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+<<<<<<< HEAD
 import 'package:get/get.dart';
 
 class TextAuth extends StatelessWidget {
   TextAuth({
+=======
+
+class TextAuth extends StatelessWidget {
+  const TextAuth({
+>>>>>>> Auth
     super.key,
     required this.isdark,
     required this.TextFirst,
@@ -14,7 +20,11 @@ class TextAuth extends StatelessWidget {
   final bool isdark;
   final String TextFirst;
   final String TextSecand;
+<<<<<<< HEAD
   Function()? onEnter;
+=======
+  final Function()? onEnter;
+>>>>>>> Auth
 
   @override
   Widget build(BuildContext context) {
