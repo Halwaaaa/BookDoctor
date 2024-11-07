@@ -1,18 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-<<<<<<< HEAD
-class SharedPrefrance extends GetxService {
-  SharedPreferences? sharedPreferences;
-
-  Future<SharedPrefrance> init() async {
-    await SharedPreferences.getInstance().then((value) {
-      sharedPreferences = value;
-      sharedPreferences?.remove("UID");
-    });
-    return this;
-  }
-=======
 class SharedPrefranceSr extends GetxService {
   SharedPreferences? sharedPreferences;
   static const String Suid = 'UID';
@@ -43,5 +31,4 @@ class SharedPrefranceSr extends GetxService {
   Future<void> setSendAsk(bool value) async {
     await sharedPreferences?.setBool(SsenedAsk, value);
   }
->>>>>>> Auth
 }

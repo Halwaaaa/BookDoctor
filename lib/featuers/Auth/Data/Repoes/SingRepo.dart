@@ -20,18 +20,6 @@ class SingReposImplo extends SingRepo {
     required this.singRemoteDataSousrce,
   });
   @override
-<<<<<<< HEAD
-  Future<Either<faluires, DocumentReference>> SendFeaTuredAskToSing(
-      ModlesAskToSing askToSing) async {
-    try {
-      log('cccc');
-      DocumentReference Resut =
-          await singRemoteDataSousrce.SendFeaTuredAskToSing(askToSing).timeout(
-        const Duration(seconds: 10),
-      );
-
-      return right(Resut);
-=======
   Future<Either<faluires, void>> SendFeaTuredAskToSing(
       ModlesAskToSing askToSing) async {
     try {
@@ -42,7 +30,6 @@ class SingReposImplo extends SingRepo {
       );
 
       return right(null);
->>>>>>> Auth
     } catch (e) {
       if (e is FirebaseException) {
         return left(faluiresfiebase.erorr(e));

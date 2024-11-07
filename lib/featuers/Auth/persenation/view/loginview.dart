@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-import 'package:flutter/material.dart';
-
-class loginview extends StatelessWidget {
-  const loginview({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-=======
 import 'package:bookdoctor/core/componted/DafultBoutton.dart';
 import 'package:bookdoctor/core/componted/DafultTextFormFiled.dart';
 import 'package:bookdoctor/core/constant/config.dart';
@@ -117,6 +107,5 @@ class Loginview extends StatelessWidget {
         ],
       ),
     );
->>>>>>> Auth
   }
 }

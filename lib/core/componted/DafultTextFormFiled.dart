@@ -51,11 +51,8 @@ class _DafulteTextFormState extends State<DafulteTextForm>
   late bool isfoucs;
   late AnimationController controller;
   late Animation<Color?> colorAnimation;
-<<<<<<< HEAD
-=======
   late Animation<double?> SizeAnimation;
   late Animation<Alignment> aligAnimation;
->>>>>>> Auth
   late FocusNode focusNode;
 
   @override
@@ -83,77 +80,6 @@ class _DafulteTextFormState extends State<DafulteTextForm>
       ),
       child: AnimatedBuilder(
         animation: controller,
-<<<<<<< HEAD
-        builder: (context, child) => SizedBox(
-          height: 70,
-          child: TextFormField(
-            focusNode: focusNode,
-
-            onChanged: widget.onChanged,
-            controller: widget.controller,
-            onTap: widget.onTap,
-            validator: widget.validator,
-            readOnly: widget.readonly == null ? false : widget.readonly!,
-            style: const TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w300),
-            //focusNode: FocusNode(),
-            decoration: InputDecoration(
-                fillColor: colorAnimation.value,
-                suffixIcon: widget.SuffIcon,
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-                prefixIcon: widget.prfixIcon,
-                // fillColor: Colors.white,
-                //focusColor: const Color.fromARGB(255, 78, 77, 72),
-                filled: true,
-                hintText: widget.title,
-                hintStyle: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 20,
-                    color: widget.ColorForHindenText ??
-                        (isDark
-                            ? Config().colorTextDark
-                            : const Color.fromRGBO(140, 138, 140, 1))),
-                //      errorBorder: InputBorder.none,
-                focusedErrorBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(color: Colors.black),
-                    borderRadius: widget.borderRadius == null
-                        ? const BorderRadius.all(Radius.circular(7))
-                        : widget.borderRadius!),
-                disabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: widget.borderRadius == null
-                        ? const BorderRadius.all(Radius.circular(7))
-                        : widget.borderRadius!),
-                // errorBorder: OutlineInputBorder(
-                //     borderSide:
-                //         BorderSide(color: isDark ? Colors.white : Colors.black),
-                //     borderRadius: widget.borderRadius == null
-                //         ? const BorderRadius.all(Radius.circular(7))
-                //         : widget.borderRadius!),
-                enabledBorder: OutlineInputBorder(
-                    borderSide: isDark
-                        ? const BorderSide(color: Colors.white)
-                        : BorderSide.none,
-                    borderRadius: widget.borderRadius == null
-                        ? const BorderRadius.all(Radius.circular(7))
-                        : widget.borderRadius!),
-                focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(color: isDark ? Colors.white : Colors.black),
-                    borderRadius: widget.borderRadius == null
-                        ? const BorderRadius.all(Radius.circular(7))
-                        : widget.borderRadius!),
-                border: widget.border ??
-                    OutlineInputBorder(
-                        borderSide: isDark
-                            ? const BorderSide(color: Colors.black)
-                            : BorderSide.none,
-                        borderRadius: widget.borderRadius == null
-                            ? const BorderRadius.all(Radius.circular(7))
-                            : widget.borderRadius!)),
-          ),
-=======
         builder: (context, child) => Stack(
           children: [
             ShaderMask(
@@ -239,7 +165,6 @@ class _DafulteTextFormState extends State<DafulteTextForm>
               ),
             ),
           ],
->>>>>>> Auth
         ),
       ),
     );
@@ -250,15 +175,7 @@ class _DafulteTextFormState extends State<DafulteTextForm>
     focusNode = FocusNode();
     controller = AnimationController(
       vsync: this,
-<<<<<<< HEAD
-      duration: const Duration(seconds: 1),
-    );
-    final curvedAnimation = CurvedAnimation(
-      parent: controller,
-      curve: Curves.slowMiddle, // يمكنك تعديل هذا المنحنى حسب الحاجة
-    );
-=======
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 500),
     )..reset();
     final curvedAnimation = CurvedAnimation(
       parent: controller,
@@ -270,18 +187,14 @@ class _DafulteTextFormState extends State<DafulteTextForm>
       end: Alignment.centerRight,
     ).animate(controller);
 
->>>>>>> Auth
     colorAnimation = ColorTween(
       begin: widget.config.colorAppbar3, // اللون الابتدائي
       end: const Color.fromRGBO(245, 245, 245, 1), // اللون عند التركيز
     ).animate(curvedAnimation);
-<<<<<<< HEAD
-=======
     SizeAnimation = Tween<double>(
       begin: 10,
       end: double.infinity,
     ).animate(curvedAnimation);
->>>>>>> Auth
     focusNode.addListener(() {
       setState(() {
         isfoucs = focusNode.hasFocus;

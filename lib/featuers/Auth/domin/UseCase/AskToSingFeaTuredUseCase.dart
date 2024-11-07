@@ -11,12 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-<<<<<<< HEAD
-class AskToSingFeaTuredUseCase
-    extends UseCase<DocumentReference, ModlesAskToSing> {
-=======
 class AskToSingFeaTuredUseCase extends UseCase<void, ModlesAskToSing> {
->>>>>>> Auth
   final SingReposImplo singRepo;
 
   AskToSingFeaTuredUseCase({
@@ -24,12 +19,7 @@ class AskToSingFeaTuredUseCase extends UseCase<void, ModlesAskToSing> {
   });
 
   @override
-<<<<<<< HEAD
-  Future<Either<faluires, DocumentReference>> call(
-      ModlesAskToSing askToSing) async {
-=======
   Future<Either<faluires, void>> call(ModlesAskToSing askToSing) async {
->>>>>>> Auth
     // TODO: implement call
     try {
       await internetConection.checkInternet();

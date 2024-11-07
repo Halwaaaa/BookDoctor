@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
-import 'package:bookdoctor/featuers/Auth/persenation/controol/singControl.dart';
-import 'package:bookdoctor/featuers/Auth/persenation/view/Sing.dart';
-=======
 import 'package:bookdoctor/featuers/Auth/persenation/MiddlewareSingPermation.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/RiveControll.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/controol/loginControll.dart';
@@ -11,25 +6,11 @@ import 'package:bookdoctor/featuers/Auth/persenation/view/AwaitForPermassionToSi
 import 'package:bookdoctor/featuers/Auth/persenation/view/SingView.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/view/loginview.dart';
 import 'package:bookdoctor/featuers/Auth/persenation/view/main.dart';
->>>>>>> Auth
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class Routers {
   // GoRouter configuration4
-<<<<<<< HEAD
-  static String Rsing = '/';
-  static String Rawssemdailog = '/awssemdailog';
-  static List<GetPage> getpage = [
-    GetPage(
-      name: Rsing,
-      page: () => const SingView(),
-      bindings: [
-        BindingsBuilder.put(() => SingContrrol(), permanent: true),
-        BindingsBuilder.put(() => RiveControll()),
-      ],
-    ),
-=======
   static String Rsing = '/Sing';
   static String Rawssemdailog = '/awssemdailog';
   static String RAwaitForPermassionToSing = '/AwaitForPermassionToSing';
@@ -57,7 +38,6 @@ class Routers {
       page: () => const AwaitForPermassionToSingView(),
     ),
     GetPage(name: RMain, page: () => const mainview())
->>>>>>> Auth
   ];
 
   static GoRouter router = GoRouter(

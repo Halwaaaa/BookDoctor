@@ -1,18 +1,12 @@
-<<<<<<< HEAD
-=======
 import 'package:bookdoctor/core/utles/Eumes.dart';
 
->>>>>>> Auth
 class ModlesAskToSing {
   String? name;
   String? email;
   String? phone;
   String? part;
   String? Uid;
-<<<<<<< HEAD
-=======
   String Sataus = 'REQ';
->>>>>>> Auth
   ModlesAskToSing({
     required this.name,
     required this.email,
@@ -26,10 +20,7 @@ class ModlesAskToSing {
     email = json['email'];
     part = json['part'];
     phone = json['phone'];
-<<<<<<< HEAD
-=======
     Sataus = json['Sataus'];
->>>>>>> Auth
   }
   Map<String, dynamic> ToMap() {
     return {
@@ -38,10 +29,7 @@ class ModlesAskToSing {
       'part': part,
       'phone': phone,
       'Uid': Uid,
-<<<<<<< HEAD
-=======
       'Sataus': Sataus
->>>>>>> Auth
     };
   }
 }
